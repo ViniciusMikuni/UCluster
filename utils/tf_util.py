@@ -442,8 +442,7 @@ def fully_connected(inputs,
           outputs = batch_norm_for_fc(outputs, is_training, bn_decay, 'bn', is_dist=is_dist)
           
       if activation_fn is not None:
-          if activation_fn == tf.nn.softmax:
-              print("Using softmax")
+          if activation_fn == tf.nn.softmax:         
               outputs = activation_fn(outputs-tf.reduce_max(outputs,axis=1, keep_dims=True))
           else:
               outputs = activation_fn(outputs)

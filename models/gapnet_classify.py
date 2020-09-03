@@ -34,8 +34,6 @@ def gap_block(k,n_heads,nn_idx,net,point_cloud,edge_size,bn_decay,weight_decay,i
 
 
     neighbors_features = tf.concat(attns, axis=-1)
-    #coefs = tf.reduce_sum(neighbors_features,axis=-1)
-    #print("shapes: ",point_cloud.shape, net.shape)
     net = tf.squeeze(net)
     #neighbors_features = tf.concat([tf.expand_dims(net, -2), neighbors_features], axis=-1)
     neighbors_features = tf.concat([tf.expand_dims(point_cloud, -2), neighbors_features], axis=-1)
@@ -57,7 +55,6 @@ def get_model(point_cloud, is_training, num_class,params, global_pl,
 
   
     k = params[0]
-    #adj = tf_util.pairwise_distance(point_cloud[:,:,:3])
     adj = tf_util.pairwise_distanceR(point_cloud[:,:,:3])
     n_heads = params[1]
     nn_idx = tf_util.knn(adj, k=k)
@@ -94,12 +91,12 @@ def get_model(point_cloud, is_training, num_class,params, global_pl,
     net12= net
     
 
-    global_expand = tf.reshape(global_pl, [batch_size, 1, 1, -1])
-    global_expand = tf.tile(global_expand, [1, num_point, 1, 1])
-    global_expand = tf_util.conv2d(global_expand, 16, [1, 1],
-                                   padding='VALID', stride=[1, 1],
-                                   bn=True, is_training=is_training,
-                                   scope='global_expand'+scname, bn_decay=bn_decay)
+    # global_expand = tf.reshape(global_pl, [batch_size, 1, 1, -1])
+    # global_expand = tf.tile(global_expand, [1, num_point, 1, 1])
+    # global_expand = tf_util.conv2d(global_expand, 16, [1, 1],
+    #                                padding='VALID', stride=[1, 1],
+    #                                bn=True, is_training=is_training,
+    #                                scope='global_expand'+scname, bn_decay=bn_decay)
 
 
     net = tf.concat([
@@ -107,7 +104,7 @@ def get_model(point_cloud, is_training, num_class,params, global_pl,
         net02,
         net11,
         net12,
-        global_expand,
+        #global_expand,
         locals_transform,
         locals_transform1
     ], axis=-1)
@@ -117,22 +114,19 @@ def get_model(point_cloud, is_training, num_class,params, global_pl,
                          activation_fn=tf.nn.relu,
                          bn=True, is_training=is_training, scope='agg'+scname, bn_decay=bn_decay)
     
-    net = tf_util.max_pool2d(net, [num_point, 1], padding='VALID', scope='avgpool'+scname)
+    net = tf_util.avg_pool2d(net, [num_point, 1], padding='VALID', scope='avgpool'+scname)
     max_pool = net
-    #net = tf.reduce_max(net, axis=1, keep_dims=True)
+    
     
     net = tf.reshape(net, [batch_size, -1]) 
     net = tf_util.fully_connected(net, params[10], bn=True, is_training=is_training, activation_fn=tf.nn.relu,
                                  scope='fc1'+scname, bn_decay=bn_decay)
-    net = tf_util.dropout(net, keep_prob=0.9, is_training=is_training,
+    net = tf_util.dropout(net, keep_prob=0.6, is_training=is_training,
                           scope='dp1'+scname)
     net = tf_util.fully_connected(net, params[11], bn=True, is_training=is_training, activation_fn=tf.nn.relu,
                                   scope='fc2'+scname, bn_decay=bn_decay)
-    net = tf_util.dropout(net, keep_prob=0.6, is_training=is_training,
-                          scope='dp2'+scname)
-
     net = tf_util.fully_connected(net, num_class,activation_fn=None, scope='fc3'+scname)
-    #net = tf_util.fully_connected(net, 1,activation_fn=None, scope='fc3'+scname)
+
 
         
     net = tf.squeeze(net)
@@ -141,62 +135,40 @@ def get_model(point_cloud, is_training, num_class,params, global_pl,
     return net,max_pool
 
 
-def SinkHorn(stack_dist,min_dist,r,epsilon=1e-2,n=4000):
-    list_exp = []
-    n, m = stack_dist.shape
-    for i in range(n):
-        exp = tf.exp(-(stack_dist[i]-min_dist)/epsilon)
-        list_exp.append(exp)
-    stack_exp = tf.stack(list_exp)
-    
-    P = stack_exp
-    P /=tf.reduce_sum(P)
-    
-
-    c = tf.ones(m)/int(m)
-
-    
-    u = tf.zeros(n)
-    
-    for j in range(n):
-        u = tf.reduce_sum(P,axis=1)
-        P *= tf.reshape((r / u),(-1, 1))
-        P *= tf.reshape((c / tf.reduce_sum(P,axis=0)),(1, -1))
-
-    return P, tf.reduce_sum(P * stack_dist)
-    
-    
-
-
-    # stack_exp_transpose = tf.transpose(stack_exp,perm=[1,0])#cik
-    # b = tf.ones([n_clusters,1],dtype=tf.float32)
-    # ones = tf.ones([batch_size,1],dtype=tf.float32)
-    # fracs = tf.expand_dims(fracs,axis=-1)
-
-    # for j in range(n):
-    #     a = ones/(batch_size*1.0*tf.matmul(stack_exp_transpose,b))#size: batch_size x 1        
-    #     b = tf.div(fracs,(tf.matmul(stack_exp,a))) #size: k x 1
-        
-    
-    # pi = tf.multiply(a,stack_exp_transpose)
-    # pi = tf.multiply(pi,tf.transpose(b,[1,0]))
-
-    # return  tf.transpose(pi,[1,0])
             
-    
+def get_focal_loss(y_pred,label,num_class,gamma=4., alpha=10):
+    gamma = float(gamma)
+    alpha = float(alpha)
+    epsilon = 1.e-9
 
-def get_loss_kmeans(max_pool,mu, fracs, max_dim,n_clusters,epsilon,alpha=100):
+    labels = tf.one_hot(indices=label, depth=num_class)
+    y_true = tf.convert_to_tensor(labels, tf.float32)
+    y_pred = tf.convert_to_tensor(y_pred, tf.float32)
+    
+    y_pred = tf.nn.softmax(y_pred-tf.reduce_max(y_pred,axis=1, keep_dims=True))
+    
+    model_out = tf.add(y_pred, epsilon)
+    ce = tf.multiply(y_true, -tf.log(model_out))
+    weight = tf.multiply(y_true, tf.pow(tf.subtract(1., model_out), gamma))
+    fl = tf.multiply(alpha, tf.multiply(weight, ce))
+    reduced_fl = tf.reduce_max(fl, axis=1)
+    return tf.reduce_mean(reduced_fl)
+
+def get_loss_kmeans(max_pool,mu,  max_dim,n_clusters,alpha=100):
     # batch_size = max_pool.get_shape()[0].value
     
     list_dist = []
+    #list_dist_centers = []
     for i in range(0, n_clusters):
         dist = f_func(tf.squeeze(max_pool), tf.reshape(mu[i, :], (1, max_dim)))
+        #dist_centers = f_func(tf.squeeze(mu), tf.reshape(mu[i, :], (1, max_dim)))
         list_dist.append(dist)
+        #list_dist_centers.append(dist_centers)
     stack_dist = tf.stack(list_dist)
     min_dist = tf.reduce_min(list_dist, axis=0)            
-
-
-    # pi, kmeans_loss = SinkHorn(stack_dist,min_dist,fracs,epsilon=epsilon)
+    #stack_centers = tf.stack(list_dist_centers)
+    #sum_dist = tf.reduce_sum(stack_centers)
+    #reg = tf.exp(-sum_dist)
 
 
     list_exp = []            
@@ -215,60 +187,12 @@ def get_loss_kmeans(max_pool,mu, fracs, max_dim,n_clusters,epsilon,alpha=100):
         list_weighted_dist.append(weighted_dist)
 
     stack_weighted_dist = tf.stack(list_weighted_dist)
-    #kmeans_loss = tf.reduce_mean(tf.reduce_sum(stack_weighted_dist, axis=0))
-    kmeans_loss = tf.reduce_sum(stack_weighted_dist, axis=0)
+    kmeans_loss = tf.reduce_mean(tf.reduce_sum(stack_weighted_dist, axis=0)) 
+    #+ 10*reg
 
 
     return kmeans_loss, stack_dist
     
-    
-
-  
-def soft_assignment(embeddings, cluster_centers):
-    """Implemented a soft assignment as the  probability of assigning sample i to cluster j.        
-    Args:
-    embeddings: (num_points, dim)
-    cluster_centers: (num_cluster, dim)
-    
-    Return:
-    q_i_j: (num_points, num_cluster)
-    """
-    
-    batch_size = embeddings.get_shape()[0].value
-    embeddings = tf.squeeze(embeddings)
-    n_clusters = cluster_centers.get_shape()[0].value
-    def _pairwise_euclidean_distance(a,b):
-        p1 = tf.matmul(
-            tf.expand_dims(tf.reduce_sum(tf.square(a), 1), 1),
-            tf.ones(shape=(1, n_clusters))
-        )
-        p2 = tf.transpose(tf.matmul(
-            tf.reshape(tf.reduce_sum(tf.square(b), 1), shape=[-1, 1]),
-            tf.ones(shape=(batch_size, 1)),
-            transpose_b=True
-        ))
-        
-        
-        res = tf.sqrt(tf.add(p1, p2) - 2 * tf.matmul(a, b, transpose_b=True))
-        return res
-
-    dist= _pairwise_euclidean_distance(embeddings, cluster_centers)
-    q = 1.0/(1.0+dist**2)
-    q = (q/tf.reduce_sum(q, axis=1, keepdims=True))
-    return q
-
-# def target_distribution(q):
-#     p = tf.square(q)/tf.reduce_sum(q,axis=0)
-#     p = p / tf.reduce_sum(p,axis=1, keepdims=True)
-#     return p
-
-def target_distribution(q):
-    p = q**2/np.sum(q,axis=0)
-    p = p / np.sum(p,axis=1, keepdims=True)
-    return p
-
-def get_kl(target, pred):
-    return tf.reduce_mean(tf.reduce_sum(target*tf.log(target/(pred)), axis=1))
 
 
 
@@ -276,7 +200,7 @@ def get_loss(pred, label,num_class):
   """ pred: B*NUM_CLASSES,
       label: B, """
   labels = tf.one_hot(indices=label, depth=num_class)
-  loss = tf.losses.softmax_cross_entropy(onehot_labels=labels, logits=pred,reduction='none')
+  loss = tf.losses.softmax_cross_entropy(onehot_labels=labels, logits=pred)
   #return loss
 
   classify_loss = tf.reduce_mean(loss)
@@ -284,52 +208,19 @@ def get_loss(pred, label,num_class):
 
 
 
-def get_loss_AE(pred, label):
-    dists_forward,_,dists_backward,_ = tf_nndistance.nn_distance(pred, label)
-    loss = tf.reduce_mean(dists_forward+dists_backward)
-    return loss*100
 
 
-def f_func(x, y,k=20):
+def f_func(x, y,k=256):
     dists = tf.square(x - y)
-    # neg_adj = -dists
-    # top_k,_ = tf.nn.top_k(neg_adj, k=k) #values, indices
-    # return tf.reduce_sum(-top_k, axis=1)
     return tf.reduce_sum(dists, axis=1)
-
-
-def get_loss_MSE(pred,label):
-    loss = tf.compat.v1.losses.mean_squared_error(label, pred)
-    loss = tf.reduce_mean(loss)
-    return loss
-
-
-
-
-
-
-
-if __name__=='__main__':
-    dists_arr = np.array(
-        [[1,2,3,8],
-         [3,1,5,2],
-         [5,6,1,7],]
-    )
-
-    batch_size = 4
-    clusters = 3
-    fracs = np.array([0.33,0.33,0.33])
-    epsilon = 1e-2
-
-    with tf.Graph().as_default():
-        dists = tf.placeholder(tf.float32, shape=(clusters,batch_size))
-        min_dist = tf.reduce_min(dists, axis=0)
-        pi, kmeans_loss,exp_dist = SinkHorn(dists,min_dist,fracs,epsilon=epsilon,n=200)
+    dists = tf.reduce_sum(dists, axis=1)
+    #dists_transpose = tf.reshape(dists,(1,dists.get_shape()[0].value))
+    neg_dist = -dists
+    #print(neg_dist.get_shape())
+    top_k,_ = tf.nn.top_k(neg_dist, k=k) #values, indices
     
-        with tf.Session() as sess:
-            sess.run(tf.global_variables_initializer())
-            feed_dict = {dists:dists_arr}
-            pi_arr,loss,mindist = sess.run([pi,kmeans_loss,min_dist],feed_dict=feed_dict) 
-            pi_arr = np.array(pi_arr)
-            print(loss,)
-            #print(dists)
+    return tf.reshape(top_k, (k,1))
+    
+
+
+

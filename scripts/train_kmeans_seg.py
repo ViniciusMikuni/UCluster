@@ -8,7 +8,6 @@ import socket
 import importlib
 import os,ast
 import sys
-from KMeans import kmeans
 from sklearn.cluster import KMeans
 import h5py
 #np.set_printoptions(edgeitems=1000)
@@ -24,15 +23,15 @@ import gapnet_seg as MODEL
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--params', default='[30,1,32,64,128,128,2,64,128,128,256,256,256]', help='DNN parameters[[k,H,A,F,F,F,H,A,F,C,F]]')
-parser.add_argument('--max_dim', type=int, default=512, help='Dimension of the encoding layer [Default: 512]')
+parser.add_argument('--max_dim', type=int, default=2, help='Dimension of the encoding layer [Default: 512]')
 parser.add_argument('--n_clusters', type=int, default=2, help='Number of clusters [Default: 2]')
-parser.add_argument('--nglob', type=int, default=2, help='Number of global features [default: 2]')
+parser.add_argument('--nglob', type=int, default=4, help='Number of global features [default: 2]')
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
 parser.add_argument('--model', default='gapnet_seg', help='Model name [default: dgcnn]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
-parser.add_argument('--num_point', type=int, default=500, help='Point Number [default: 500]')
+parser.add_argument('--num_point', type=int, default=100, help='Point Number [default: 500]')
 parser.add_argument('--max_epoch', type=int, default=100, help='Epoch to run [default: 100]')
-parser.add_argument('--batch_size', type=int, default=64, help='Batch Size during training [default: 64]')
+parser.add_argument('--batch_size', type=int, default=1024, help='Batch Size during training [default: 64]')
 parser.add_argument('--learning_rate', type=float, default=0.01, help='Initial learning rate [default: 0.01]')
 
 parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
@@ -41,17 +40,18 @@ parser.add_argument('--decay_step', type=int, default=2000000, help='Decay step 
 parser.add_argument('--wd', type=float, default=0.0, help='Weight Decay [Default: 0.0]')
 parser.add_argument('--decay_rate', type=float, default=0.5, help='Decay rate for lr decay [default: 0.5]')
 parser.add_argument('--output_dir', type=str, default='train_results', help='Directory that stores all training logs and trained models')
-parser.add_argument('--data_dir', default='hdf5_data', help='directory with data [default: hdf5_data]')
-parser.add_argument('--nfeat', type=int, default=8, help='Number of features [default: 8]')
-parser.add_argument('--ncat', type=int, default=2, help='Number of categories [default: 2]')
+parser.add_argument('--data_dir', default='../h5', help='directory with data [default: hdf5_data]')
+parser.add_argument('--nfeat', type=int, default=7, help='Number of features [default: 8]')
+parser.add_argument('--ncat', type=int, default=21, help='Number of categories [default: 2]')
+parser.add_argument('--box', type=int, default=1, help='Black Box number, ignored if RD dataset [default: 1]')
 parser.add_argument('--min', default='loss', help='Condition for early stopping loss or acc [default: loss]')
-
+parser.add_argument('--RD',  default=False, action='store_true',help='Use RD data set [default: False')
 
 
 
 FLAGS = parser.parse_args()
 H5_DIR = FLAGS.data_dir
-RD = False
+RD = FLAGS.RD
 EPOCH_CNT = 0
 MAX_PRETRAIN = 10
 params = ast.literal_eval(FLAGS.params)
@@ -88,17 +88,13 @@ LEARNING_RATE_CLIP = 1e-5
 HOSTNAME = socket.gethostname()
 EARLY_TOLERANCE=200
 
-#TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel.txt'))
-#TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel.txt'))
 
-# TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b1.txt'))
-# TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b1.txt'))
-
-#TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b2.txt'))
-#TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b2.txt'))
-
-TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b3.txt'))
-TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b3.txt'))
+if RD:
+    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_RD.txt'))
+    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_RD.txt'))
+else:
+    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b{}.txt'.format(FLAGS.box)))
+    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b{}.txt'.format(FLAGS.box)))
                                                                    
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')
@@ -152,17 +148,12 @@ def train():
             
             mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=True) #k centroids
             
-            #loss = MODEL.get_loss(pred, labels_pl,NUM_CLASSES)
-            loss = MODEL.get_focal_loss(labels_pl,pred,NUM_CLASSES)
+            loss = MODEL.get_focal_loss(pred,labels_pl,NUM_CLASSES)
             kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, FLAGS.max_dim,
                                                             FLAGS.n_clusters,alpha)
             
             loss = tf.cond(is_full_training,lambda:kmeans_loss + loss,lambda:loss)
             
-            #loss = MODEL.get_loss(pred, labels_pl,NUM_CLASSES)
-            #loss = tf.cond(is_full_training,lambda:100*kmeans_loss + MODEL.get_loss_MSE(pred, labels_pl),lambda:MODEL.get_loss_MSE(pred, labels_pl))
-            
-
 
             
             print("--- Get training operator")
@@ -202,7 +193,6 @@ def train():
                'is_full_training': is_full_training,
                'max_pool':max_pool,
                'pred': pred,
-               #'pi':pi,
                'alpha': alpha,
                'stack_dist':stack_dist,
                'loss': loss,
@@ -288,7 +278,7 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
         else:
             current_data, current_label = provider.load_h5(current_file,'seg')
 
-        adds = provider.load_add(current_file,['global','masses'])
+        adds = provider.load_add(current_file,['global'])
         if NUM_GLOB < adds['global'].shape[1]:
             log_string("Using less global variables than possible")
             adds['global'] = adds['global'][:,:NUM_GLOB]
@@ -312,18 +302,18 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
             #print(batch_weight) 
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['labels_pl']: batch_label,
-                         #ops['labels_pl']: adds['masses'][start_idx:end_idx],
                          ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['is_training_pl']: is_training,
-                         ops['alpha']: 5*(EPOCH_CNT-MAX_PRETRAIN)+1,
+                         ops['alpha']: 10*(EPOCH_CNT-MAX_PRETRAIN+1),
                          
                         
             }
             if is_full_training:
                 summary, step, _, loss_val, pred_val,max_pool,dist = sess.run([ops['merged'], ops['step'],
                                                                                ops['train_op'], ops['loss'],
-                                                                               ops['pred'],ops['max_pool'],ops['stack_dist']
+                                                                               ops['pred'],ops['max_pool'],
+                                                                               ops['stack_dist']
                                                                            ],
                                                                               
                                                                               feed_dict=feed_dict)
@@ -338,18 +328,6 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
                     if batch_cluster.size == cluster_assign.size:    
                         acc+=cluster_acc(batch_cluster,cluster_assign)
 
-                # if EPOCH_CNT%3==0:
-                #     if len(y_assign)==0:                
-                #         if RD:
-                #             y_val=batch_cluster
-                #         y_assign=cluster_assign
-                #         y_pool=np.squeeze(max_pool)
-                #     else:
-                #         if RD:
-                #             y_val=np.concatenate((y_val,batch_cluster),axis=0)
-                #         y_assign=np.concatenate((y_assign,cluster_assign),axis=0)
-                #         y_pool=np.concatenate((y_pool,np.squeeze(max_pool)),axis=0)
-                    
 
             else:
                 summary, step, _, loss_val, pred_val,max_pool = sess.run([ops['merged'], ops['step'],
@@ -370,17 +348,7 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
 
             train_writer.add_summary(summary, step)
     log_string('mean loss: %f' % (loss_sum / float(num_batches)))
-    log_string('train clustering accuracy: %f' % (acc/ num_batches))
-    # if len(y_assign)>0:
-    #     with h5py.File(os.path.join(H5_DIR,'cluster_info_4c.h5'), "w") as fh5:        
-    #         if RD:
-    #             dset = fh5.create_dataset("label", data=y_val)
-    #         dset = fh5.create_dataset("pid", data=y_assign)
-    #         dset = fh5.create_dataset("max_pool", data=y_pool)
-    #         dset = fh5.create_dataset("global", data=adds['global'][:num_batches*BATCH_SIZE])
-    #         dset = fh5.create_dataset("masses", data=adds['masses'][:num_batches*BATCH_SIZE])
-    #         #dset = fh5.create_dataset("data", data=current_data[:num_batches*BATCH_SIZE])
-
+    log_string('train clustering accuracy: %f' % (acc/ float(num_batches)))
     return y_pool
         
 def eval_one_epoch(sess, ops, test_writer,is_full_training):
@@ -411,7 +379,6 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
             
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
-        #num_batches = 3
         for batch_idx in range(num_batches):
             start_idx = batch_idx * BATCH_SIZE
             end_idx = (batch_idx+1) * BATCH_SIZE
@@ -423,8 +390,7 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
                          ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['labels_pl']: batch_label,
-                         #ops['labels_pl']: adds['masses'][start_idx:end_idx],
-                         ops['alpha']: 10*(EPOCH_CNT-MAX_PRETRAIN),
+                         ops['alpha']: 10*(EPOCH_CNT-MAX_PRETRAIN+1),
             }
             if is_full_training:
                 summary, step, loss_val, pred_val,max_pool,dist= sess.run([ops['merged'], ops['step'],
@@ -436,9 +402,6 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
                                                                            ],
                                                                               feed_dict=feed_dict)
 
-                #log_string('{}'.format(pi[0]))
-                #log_string('sum col {}'.format(np.sum(pi,axis=1)))
-                #log_string('sum row {}'.format(np.sum(pi,axis=0)))
                 cluster_assign = np.zeros((cur_batch_size), dtype=int)
                 for i in range(cur_batch_size):
                     index_closest_cluster = np.argmin(dist[:, i])

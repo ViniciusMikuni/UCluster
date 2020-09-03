@@ -33,12 +33,13 @@ parser.add_argument('--modeln', type=int,default=-1, help='Model number')
 parser.add_argument('--nglob', type=int, default=2, help='Number of global features [default: 2]')
 parser.add_argument('--batch', type=int, default=64, help='Batch Size  during training [default: 64]')
 parser.add_argument('--num_point', type=int, default=500, help='Point Number [default: 500]')
-parser.add_argument('--data_dir', default='../data/PU', help='directory with data [default: ../data/PU]')
+parser.add_argument('--data_dir', default='../h5', help='directory with data [default: ../data/PU]')
 parser.add_argument('--nfeat', type=int, default=8, help='Number of features [default: 8]')
 parser.add_argument('--ncat', type=int, default=2, help='Number of categories [default: 2]')
 parser.add_argument('--name', default="", help='name of the output file')
 parser.add_argument('--h5_folder', default="../h5/", help='folder to store output files')
-
+parser.add_argument('--gwztop',  default=False, action='store_true',help='use the set with g/w/z/top [default: False]')
+parser.add_argument('--full_train',  default=False, action='store_true',help='load full training results [default: False]')
 
 FLAGS = parser.parse_args()
 MODEL_PATH = FLAGS.model_path
@@ -53,7 +54,7 @@ if not os.path.exists(H5_OUT): os.mkdir(H5_OUT)
 NUM_POINT = FLAGS.num_point
 BATCH_SIZE = FLAGS.batch
 NFEATURES = FLAGS.nfeat
-FULL_TRAINING = False
+FULL_TRAINING = FLAGS.full_train
 
 
 NUM_CATEGORIES = FLAGS.ncat
@@ -68,14 +69,10 @@ print('#### Using GPUs: {0}'.format(FLAGS.gpu))
     
 print('### Starting evaluation')
 
-
-EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_class.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel.txt')) # Need to create those
-#print("Loading: ",os.path.join(H5_DIR, 'evaluate_files_class.txt'))
-
-def printout(flog, data):
-    print(data)
-    flog.write(data + '\n')
+if FLAGS.gwztop:
+    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_gwztop.txt')) 
+else:
+    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_wztop.txt')) 
 
   
 def eval():
@@ -86,13 +83,12 @@ def eval():
             alpha = tf.placeholder(tf.float32, shape=())
             is_training_pl = tf.placeholder(tf.bool, shape=())
             pred,max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,params=params,global_pl = global_pl,num_class=NUM_CATEGORIES)
-            mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=True) #k centroids
-            epsilon = 1e-2
-            fracs = tf.constant([0.33,0.33,0.33])
+            mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=False) #k centroids
             
-            loss  = MODEL.get_loss(pred,labels_pl,NUM_CATEGORIES)
-            kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, fracs, FLAGS.max_dim,
-                                                           FLAGS.n_clusters,epsilon,alpha)
+            #loss  = MODEL.get_loss(pred,labels_pl,NUM_CATEGORIES)
+            loss = MODEL.get_focal_loss(pred, labels_pl,NUM_CATEGORIES)
+            kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, FLAGS.max_dim,
+                                                           FLAGS.n_clusters,alpha)
 
             
             saver = tf.train.Saver()
@@ -128,7 +124,6 @@ def eval():
 def get_batch(data,label,global_pl,  start_idx, end_idx):
     batch_label = label[start_idx:end_idx]
     batch_global = global_pl[start_idx:end_idx,:]
-    #batch_label = label[start_idx:end_idx,:]
     batch_data = data[start_idx:end_idx,:,:]
     return batch_data, batch_label, batch_global
 
@@ -150,6 +145,7 @@ def eval_one_epoch(sess,ops):
         
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
+        #num_batches = 10
 
         
 
@@ -164,7 +160,6 @@ def eval_one_epoch(sess,ops):
 
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['global_pl']: batch_global,
-                         #ops['labels_pl']: adds['masses'][start_idx:end_idx],
                          ops['labels_pl']: batch_label,
                          ops['alpha']: 100,
                          ops['is_training_pl']: is_training,
@@ -172,40 +167,38 @@ def eval_one_epoch(sess,ops):
 
             loss, dist,max_pool = sess.run([ops['kmeans_loss'], ops['stack_dist'],
                                             ops['max_pool']],feed_dict=feed_dict)
-
             cluster_assign = np.zeros((cur_batch_size), dtype=int)
-            #print(dist)
-
             for i in range(cur_batch_size):
                 index_closest_cluster = np.argmin(dist[:, i])
                 cluster_assign[i] = index_closest_cluster
-            
+
             batch_cluster = np.array([np.where(r==1)[0][0] for r in current_cluster[start_idx:end_idx]])
-            if len(y_val)==0:                
+
+            if len(y_val)==0:      
                 y_val=batch_cluster
-                y_loss = loss
+                #y_loss = loss
                 y_assign=cluster_assign
                 y_pool=np.squeeze(max_pool)
+                y_mass = adds['masses'][start_idx:end_idx]
+                #y_data = batch_data[:,:,:3]
             else:
                 y_val=np.concatenate((y_val,batch_cluster),axis=0)
-                y_loss=np.concatenate((y_loss,loss),axis=0)
+                #y_loss=np.concatenate((y_loss,loss),axis=0)
                 y_assign=np.concatenate((y_assign,cluster_assign),axis=0)
                 y_pool=np.concatenate((y_pool,np.squeeze(max_pool)),axis=0)
+                y_mass=np.concatenate((y_mass,adds['masses'][start_idx:end_idx]),axis=0)
+                #y_data=np.concatenate((y_data,batch_data[:,:,:3]),axis=0)
                             
     pos_label = 1
     total_loss = loss_sum*1.0 / float(num_batches)    
 
 
-
-    #print('The total accuracy is {0}'.format(total_correct / float(total_seen)))
-    #print('The signal accuracy is {0}'.format(total_correct_ones / float(total_seen_ones)))
-
     with h5py.File(os.path.join(H5_OUT,'{0}.h5'.format(FLAGS.name)), "w") as fh5:
         dset = fh5.create_dataset("pid", data=y_val)
-        dset = fh5.create_dataset("loss", data=y_loss)
+        #dset = fh5.create_dataset("data", data=y_data)
         dset = fh5.create_dataset("label", data=y_assign)
-        dset = fh5.create_dataset("max_pool", data=y_pool)
-        dset = fh5.create_dataset("masses", data=y_pool)
+        dset = fh5.create_dataset("max_pool", data=y_pool)        
+        dset = fh5.create_dataset("masses", data=y_mass)
 
 ################################################          
     

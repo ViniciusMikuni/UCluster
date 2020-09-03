@@ -28,18 +28,20 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--params', default='[50,1,32,64,128,128,2,64,128,128,256,256,256]', help='DNN parameters[[k,H,A,F,F,F,H,A,F,C,F]]')
 parser.add_argument('--gpu', type=int, default=0, help='GPUs to use [default: 0]')
 parser.add_argument('--n_clusters', type=int, default=2, help='Number of clusters [Default: 2]')
-parser.add_argument('--max_dim', type=int, default=512, help='Dimension of the encoding layer [Default: 512]')
+parser.add_argument('--max_dim', type=int, default=2, help='Dimension of the encoding layer [Default: 512]')
 parser.add_argument('--model_path', default='../logs/PU/model.ckpt', help='Model checkpoint path')
 parser.add_argument('--modeln', type=int,default=-1, help='Model number')
-parser.add_argument('--nglob', type=int, default=2, help='Number of global features [default: 2]')
+parser.add_argument('--nglob', type=int, default=4, help='Number of global features [default: 2]')
 parser.add_argument('--batch', type=int, default=64, help='Batch Size  during training [default: 64]')
-parser.add_argument('--num_point', type=int, default=500, help='Point Number [default: 500]')
-parser.add_argument('--data_dir', default='../data/PU', help='directory with data [default: ../data/PU]')
-parser.add_argument('--nfeat', type=int, default=8, help='Number of features [default: 8]')
-parser.add_argument('--ncat', type=int, default=2, help='Number of categories [default: 2]')
+parser.add_argument('--num_point', type=int, default=100, help='Point Number [default: 500]')
+parser.add_argument('--data_dir', default='../h5', help='directory with data [default: ../data/PU]')
+parser.add_argument('--nfeat', type=int, default=7, help='Number of features [default: 8]')
+parser.add_argument('--ncat', type=int, default=21, help='Number of categories [default: 2]')
 parser.add_argument('--name', default="", help='name of the output file')
 parser.add_argument('--h5_folder', default="../h5/", help='folder to store output files')
-
+parser.add_argument('--box', type=int, default=1, help='Black Box number, ignored if RD dataset [default: 1]')
+parser.add_argument('--RD',  default=False, action='store_true',help='Use RD data set [default: False')
+parser.add_argument('--full_train',  default=False, action='store_true',help='Use full training [default: False')
 
 FLAGS = parser.parse_args()
 MODEL_PATH = FLAGS.model_path
@@ -49,8 +51,8 @@ DATA_DIR = FLAGS.data_dir
 H5_DIR = os.path.join(BASE_DIR, DATA_DIR)
 H5_OUT = FLAGS.h5_folder
 if not os.path.exists(H5_OUT): os.mkdir(H5_OUT)  
-FULL_TRAINING = True
-RD = True
+FULL_TRAINING = FLAGS.full_train
+RD = FLAGS.RD
 # MAIN SCRIPT
 NUM_POINT = FLAGS.num_point
 BATCH_SIZE = FLAGS.batch
@@ -92,21 +94,12 @@ def cluster_acc(y_true, y_pred):
         
 
 
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b3.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b3.txt')) # Need to create those
 
 
-
-EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_QCD.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel_b1.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel_b2.txt')) # Need to create those
-#EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel_b3.txt')) # Need to create those
-#print("Loading: ",os.path.join(H5_DIR, 'evaluate_files_class.txt'))
-
-def printout(flog, data):
-    print(data)
-    flog.write(data + '\n')
+if RD:
+    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_RD.txt')) # Need to create those
+else:
+    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel_b{}.txt'.format(FLAGS.box))) 
 
   
 def eval():
@@ -118,12 +111,12 @@ def eval():
             is_training_pl = tf.placeholder(tf.bool, shape=())
             pred,max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,params=params,global_pl = global_pl,num_class=NUM_CATEGORIES)
             mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=False) #k centroids
-            #loss = MODEL.get_loss(pred, labels_pl,NUM_CATEGORIES)
-            loss = MODEL.get_focal_loss(labels_pl,pred,NUM_CATEGORIES)
+            loss = MODEL.get_loss(pred, labels_pl,NUM_CATEGORIES)
+            #loss = MODEL.get_focal_loss(labels_pl,pred,NUM_CATEGORIES)
             kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, FLAGS.max_dim,
                                                            FLAGS.n_clusters,alpha)
 
-            
+
             saver = tf.train.Saver()
           
 
@@ -160,7 +153,6 @@ def eval():
 def get_batch(data,label,global_pl,  start_idx, end_idx):
     batch_label = label[start_idx:end_idx]
     batch_global = global_pl[start_idx:end_idx,:]
-    #batch_label = label[start_idx:end_idx,:]
     batch_data = data[start_idx:end_idx,:]
     return batch_data, batch_label, batch_global
 
@@ -216,11 +208,10 @@ def eval_one_epoch(sess,ops):
                          ops['alpha']: 100,
                          ops['is_training_pl']: is_training,
             }
-            #,beforemax
-            pred, dist,mu,max_pool = sess.run([ops['pred'], ops['stack_dist'],ops['mu'],
+
+            dist,mu,max_pool = sess.run([ops['stack_dist'],ops['mu'],
                                             ops['max_pool']],feed_dict=feed_dict)
 
-            #print(pred)
             cluster_assign = np.zeros((cur_batch_size), dtype=int)
             if RD:
                 batch_cluster = current_cluster[start_idx:end_idx]

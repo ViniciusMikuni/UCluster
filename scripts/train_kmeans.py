@@ -8,7 +8,6 @@ import socket
 import importlib
 import os,ast
 import sys
-from KMeans import kmeans
 from sklearn.cluster import KMeans
 import h5py
 np.set_printoptions(edgeitems=1000)
@@ -41,11 +40,10 @@ parser.add_argument('--decay_step', type=int, default=2000000, help='Decay step 
 parser.add_argument('--wd', type=float, default=0.0, help='Weight Decay [Default: 0.0]')
 parser.add_argument('--decay_rate', type=float, default=0.5, help='Decay rate for lr decay [default: 0.5]')
 parser.add_argument('--output_dir', type=str, default='train_results', help='Directory that stores all training logs and trained models')
-parser.add_argument('--data_dir', default='hdf5_data', help='directory with data [default: hdf5_data]')
+parser.add_argument('--data_dir', default='../h5', help='directory with data [default: hdf5_data]')
 parser.add_argument('--nfeat', type=int, default=8, help='Number of features [default: 8]')
 parser.add_argument('--ncat', type=int, default=2, help='Number of categories [default: 2]')
-parser.add_argument('--min', default='loss', help='Condition for early stopping loss or acc [default: loss]')
-
+parser.add_argument('--gwztop',  default=False, action='store_true',help='use the set with g/w/z/top [default: False]')
 
 
 
@@ -53,7 +51,7 @@ FLAGS = parser.parse_args()
 H5_DIR = FLAGS.data_dir
 
 EPOCH_CNT = 0
-MAX_PRETRAIN = 30
+MAX_PRETRAIN = 20
 params = ast.literal_eval(FLAGS.params)
 BATCH_SIZE = FLAGS.batch_size
 NUM_GLOB = FLAGS.nglob
@@ -73,8 +71,8 @@ MODEL_FILE = os.path.join(BASE_DIR, 'models', FLAGS.model+'.py')
 LOG_DIR = os.path.join('..','logs',FLAGS.log_dir)
 
 if not os.path.exists(LOG_DIR): os.makedirs(LOG_DIR)
-os.system('cp %s %s' % (MODEL_FILE, LOG_DIR)) # bkp of model def
-os.system('cp train_dkm.py %s' % (LOG_DIR)) # bkp of train procedure
+os.system('cp %s.py %s' % (MODEL_FILE, LOG_DIR)) # bkp of model def
+os.system('cp train_kmeans.py %s' % (LOG_DIR)) # bkp of train procedure
 LOG_FOUT = open(os.path.join(LOG_DIR, 'log_dkm.txt'), 'w')
 LOG_FOUT.write(str(FLAGS)+'\n')
 
@@ -86,13 +84,13 @@ BN_DECAY_CLIP = 0.99
 
 LEARNING_RATE_CLIP = 1e-5
 HOSTNAME = socket.gethostname()
-EARLY_TOLERANCE=200
 
-TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_class.txt'))
-TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_class.txt'))
-
-# TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel.txt'))
-# TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel.txt'))
+if FLAGS.gwztop:
+    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_gwztop.txt'))
+    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_gwztop.txt'))
+else:
+    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_wztop.txt'))
+    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_wztop.txt'))
                                                                    
 
 def log_string(out_str):
@@ -130,7 +128,7 @@ def train():
             pointclouds_pl,  labels_pl, global_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT,NUM_FEAT,NUM_GLOB) 
 
             is_training_pl = tf.placeholder(tf.bool, shape=())
-            is_full_training = tf.placeholder(tf.bool, shape=())
+
             # Note the global_step=batch parameter to minimize. 
             # That tells the optimizer to helpfully increment the 'batch' parameter for you every time it trains.
             batch = tf.Variable(0)
@@ -139,28 +137,19 @@ def train():
             tf.summary.scalar('bn_decay', bn_decay)
             print("--- Get model and loss")
 
-            pred , max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,global_pl = global_pl,
+            pred , max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,
+                                              global_pl = global_pl,
                                               params=params,bn_decay=bn_decay,
                                               num_class=NUM_CLASSES, weight_decay=FLAGS.wd,
             )
-            
-            
+                                                                                        
+            class_loss = MODEL.get_loss(pred, labels_pl,NUM_CLASSES)            
+            #class_loss = MODEL.get_focal_loss(pred, labels_pl,NUM_CLASSES)
             mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=True) #k centroids
-            epsilon = 1e-2
-            fracs = tf.constant([0.33,0.33,0.33])
-
-
-            #kmeans_loss = get_loss_kmeans(max_pool,mu, fracs, FLAGS.max_dim,FLAGS.n_clusters,epsilon)
+            kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu,  FLAGS.max_dim,
+                                                            FLAGS.n_clusters,alpha)
             
-            loss = MODEL.get_loss(pred, labels_pl,NUM_CLASSES)
-            kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, fracs, FLAGS.max_dim,
-                                                            FLAGS.n_clusters,epsilon,alpha)
-            
-            loss = tf.cond(is_full_training,lambda:kmeans_loss + loss,lambda:loss)
-            
-            #loss = MODEL.get_loss(pred, labels_pl,NUM_CLASSES)
-            #loss = tf.cond(is_full_training,lambda:100*kmeans_loss + MODEL.get_loss_MSE(pred, labels_pl),lambda:MODEL.get_loss_MSE(pred, labels_pl))
-            
+            full_loss = 10*kmeans_loss + class_loss
 
 
             
@@ -170,9 +159,13 @@ def train():
             tf.summary.scalar('learning_rate', learning_rate)
             if OPTIMIZER == 'momentum':
                 optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=MOMENTUM)
+                #optimizer_ct = tf.train.MomentumOptimizer(1e-3,momentum=MOMENTUM)
             elif OPTIMIZER == 'adam':
                 optimizer = tf.train.AdamOptimizer(learning_rate)
-            train_op = optimizer.minimize(loss, global_step=batch)
+                #optimizer_ct = tf.train.AdamOptimizer(1e-3)
+            
+            train_op_full = optimizer.minimize(full_loss, global_step=batch)
+            train_op = optimizer.minimize(class_loss, global_step=batch)
             
             # Add ops to save and restore all the variables.
             saver = tf.train.Saver()
@@ -199,24 +192,21 @@ def train():
                'labels_pl':labels_pl,
                'global_pl':global_pl,
                'is_training_pl': is_training_pl,
-               'is_full_training': is_full_training,
                'max_pool':max_pool,
                'pred': pred,
-               #'pi':pi,
                'alpha': alpha,
+               'mu': mu,
                'stack_dist':stack_dist,
-               'loss': loss,
+               'class_loss': class_loss,
+               'kmeans_loss': kmeans_loss,
                'train_op': train_op,
+               'train_op_full': train_op_full,
                'merged': merged,
                'step': batch,
+               'learning_rate':learning_rate
         }
 
-        best_acc = -1
-        
-        
-        if FLAGS.min == 'loss':early_stop = np.inf
-        else:early_stop = 0
-        earlytol = 0
+
 
 
         for epoch in range(MAX_EPOCH):
@@ -224,10 +214,17 @@ def train():
             sys.stdout.flush()
             
             is_full_training = epoch > MAX_PRETRAIN
-            #is_full_training = False
+            max_pool = train_one_epoch(sess, ops, train_writer,is_full_training)
+            if epoch == MAX_PRETRAIN:
+                centers  = KMeans(n_clusters=FLAGS.n_clusters).fit(np.squeeze(max_pool))
+                centers = centers.cluster_centers_
+                sess.run(tf.assign(mu,centers))
+                # sess.run(tf.assign(batch,1))
+                # global BASE_LEARNING_RATE
+                # BASE_LEARNING_RATE = 0.01
+                
             
-            
-            lss = eval_one_epoch(sess, ops, test_writer,is_full_training)
+            eval_one_epoch(sess, ops, test_writer,is_full_training)
             if is_full_training:
                 save_path = saver.save(sess, os.path.join(LOG_DIR, 'cluster_dkm.ckpt'))
             else:
@@ -236,11 +233,7 @@ def train():
 
             log_string("Model saved in file: %s" % save_path)
 
-            max_pool = train_one_epoch(sess, ops, train_writer,is_full_training)
-            if epoch == MAX_PRETRAIN:
-                centers  = KMeans(n_clusters=FLAGS.n_clusters).fit(np.squeeze(max_pool))
-                centers = centers.cluster_centers_
-                sess.run(tf.assign(mu,centers))
+            
             
 def get_batch(data,label,global_pl,  start_idx, end_idx):
     batch_label = label[start_idx:end_idx]
@@ -252,15 +245,8 @@ def get_batch(data,label,global_pl,  start_idx, end_idx):
 def cluster_acc(y_true, y_pred):
     """
     Calculate clustering accuracy. Require scikit-learn installed
-    # Arguments
-    y: true labels, numpy.array with shape `(n_samples,)`
-    y_pred: predicted labels, numpy.array with shape `(n_samples,)`
-    # Return
-    accuracy, in [0,1]
     """
     y_true = y_true.astype(np.int64)
-    #print(y_pred.shape,y_true.shape)
-    assert y_pred.size == y_true.size
     D = max(y_pred.max(), y_true.max()) + 1
     w = np.zeros((D, D), dtype=np.int64)
     for i in range(y_pred.size):
@@ -290,7 +276,7 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
         
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
-                                                                
+        #num_batches = 5
         log_string(str(datetime.now()))        
 
         
@@ -304,23 +290,19 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
             #print(batch_weight) 
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['labels_pl']: batch_label,
-                         #ops['labels_pl']: adds['masses'][start_idx:end_idx],
-                         ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['is_training_pl']: is_training,
-                         ops['alpha']: 2*(EPOCH_CNT-MAX_PRETRAIN),
+                         ops['alpha']: 2*(EPOCH_CNT-MAX_PRETRAIN+1),
                          
                         
             }
             if is_full_training:
-                summary, step, _, loss_val, pred_val,max_pool,dist = sess.run([ops['merged'], ops['step'],
-                                                                               ops['train_op'], ops['loss'],
-                                                                               ops['pred'],ops['max_pool'],ops['stack_dist']
-                                                                           ],
-                                                                              
-                                                                              feed_dict=feed_dict)
+                summary, step, _, loss_val,dist,lr = sess.run([ops['merged'], ops['step'],
+                                                            ops['train_op_full'], ops['kmeans_loss'],
+                                                            ops['stack_dist'],ops['learning_rate']
+                                                           ], 
+                                                              feed_dict=feed_dict)
 
-            
             
                 batch_cluster = np.array([np.where(r==1)[0][0] for r in current_cluster[start_idx:end_idx]])
                 cluster_assign = np.zeros((cur_batch_size), dtype=int)
@@ -332,24 +314,25 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
 
                 acc+=cluster_acc(batch_cluster,cluster_assign)
             else:
-                summary, step, _, loss_val, pred_val,max_pool = sess.run([ops['merged'], ops['step'],
-                                                                          ops['train_op'], ops['loss'],
-                                                                          ops['pred'],ops['max_pool']
-                                                                      ],
-                                                                              
-                                                                         feed_dict=feed_dict)
-
-
+                summary, step, _, loss_val,max_pool,lr = sess.run([ops['merged'], ops['step'],
+                                                                   ops['train_op'], ops['class_loss'],
+                                                                   ops['max_pool'],ops['learning_rate']],
+                                                               
+                                                               feed_dict=feed_dict)
+                
+                
+                
+                if len(y_pool)==0:
+                    y_pool=np.squeeze(max_pool)                
+                else:
+                    y_pool=np.concatenate((y_pool,np.squeeze(max_pool)),axis=0)
+                
             loss_sum += np.mean(loss_val)
-            if len(y_pool)==0:
-                y_pool=np.squeeze(max_pool)                
-            else:
-                y_pool=np.concatenate((y_pool,np.squeeze(max_pool)),axis=0)
-
 
             train_writer.add_summary(summary, step)
-    log_string('mean loss: %f' % (loss_sum / float(num_batches)))
-    log_string('train clustering accuracy: %f' % (acc/ num_batches))
+    log_string('learning rate: %f' % (lr))
+    log_string('train mean loss: %f' % (loss_sum / float(num_batches)))
+    log_string('train clustering accuracy: %f' % (acc/ float(num_batches)))
     return y_pool
         
 def eval_one_epoch(sess, ops, test_writer,is_full_training):
@@ -359,7 +342,7 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
     test_idxs = np.arange(0, len(TEST_FILES))
     # Test on all data: last batch might be smaller than BATCH_SIZE
     loss_sum = acc =0
-    acc_seg = 0
+    acc_kmeans = 0
 
 
     for fn in range(len(TEST_FILES)):
@@ -373,6 +356,7 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
             
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
+        #num_batches = 5
         for batch_idx in range(num_batches):
             start_idx = batch_idx * BATCH_SIZE
             end_idx = (batch_idx+1) * BATCH_SIZE
@@ -381,28 +365,22 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
             
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['is_training_pl']: is_training,
-                         ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['labels_pl']: batch_label,
                          #ops['labels_pl']: adds['masses'][start_idx:end_idx],
-                         ops['alpha']: 2*(EPOCH_CNT-MAX_PRETRAIN),
+                         ops['alpha']: 2*(EPOCH_CNT-MAX_PRETRAIN+1),
 
             }
 
             if is_full_training:
-                summary, step, loss_val, pred_val,max_pool,dist= sess.run([ops['merged'], ops['step'],
-                                                                           ops['loss'], ops['pred'],
-                                                                           ops['max_pool'],ops['stack_dist'],
-                                                                           
-                                                                           #ops['pi']
-                                                                           
-                                                                           ],
-                                                                              feed_dict=feed_dict)
-
-                #log_string('{}'.format(pi[0]))
-                #log_string('sum col {}'.format(np.sum(pi,axis=1)))
-                #log_string('sum row {}'.format(np.sum(pi,axis=0)))
-                
+                summary, step, loss_val, max_pool,dist,mu= sess.run([ops['merged'], ops['step'],
+                                                                     ops['kmeans_loss'],
+                                                                     ops['max_pool'],ops['stack_dist'],
+                                                                     ops['mu']
+                                                                 ],
+                                                                    feed_dict=feed_dict)
+                if batch_idx==0:
+                    log_string("mu: {}".format(mu))     
                 batch_cluster = np.array([np.where(r==1)[0][0] for r in current_cluster[start_idx:end_idx]])
                 cluster_assign = np.zeros((cur_batch_size), dtype=int)
                 for i in range(cur_batch_size):
@@ -410,14 +388,16 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
                     cluster_assign[i] = index_closest_cluster
 
                 acc+=cluster_acc(batch_cluster,cluster_assign)
+                kmeans_labels  = KMeans(n_clusters=FLAGS.n_clusters).fit(np.squeeze(max_pool))
+                kmeans_labels = kmeans_labels.labels_
+                acc_kmeans +=cluster_acc(batch_cluster,kmeans_labels)
+                
 
             else:
-                summary, step, loss_val, pred_val,max_pool= sess.run([ops['merged'], ops['step'],
-                                                                      ops['loss'], ops['pred'],
-                                                                      ops['max_pool'],
-                                                                  ],
-                                                                     feed_dict=feed_dict)
-
+                summary, step, loss_val= sess.run([ops['merged'], ops['step'],
+                                                   ops['class_loss']
+                                               ],
+                                                  feed_dict=feed_dict)
 
 
             test_writer.add_summary(summary, step)
@@ -427,14 +407,12 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
             loss_sum += np.mean(loss_val)
         
     total_loss = loss_sum*1.0 / float(num_batches)
-    log_string('mean loss: %f' % (total_loss))
+    log_string('test mean loss: %f' % (total_loss))
     log_string('testing clustering accuracy: %f' % (acc / float(num_batches)))
+    log_string('testing kmenas clustering accuracy: %f' % (acc_kmeans / float(num_batches)))
 
     EPOCH_CNT += 1
-    if FLAGS.min == 'acc':
-        return total_correct / float(total_seen)
-    else:
-        return total_loss
+
     
 
 
