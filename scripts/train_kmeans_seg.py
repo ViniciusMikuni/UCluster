@@ -13,6 +13,7 @@ import h5py
 #np.set_printoptions(edgeitems=1000)
 
 from scipy.optimize import linear_sum_assignment
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR,'..', 'models'))
@@ -22,7 +23,6 @@ import gapnet_seg as MODEL
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--params', default='[30,1,32,64,128,128,2,64,128,128,256,256,256]', help='DNN parameters[[k,H,A,F,F,F,H,A,F,C,F]]')
 parser.add_argument('--max_dim', type=int, default=2, help='Dimension of the encoding layer [Default: 512]')
 parser.add_argument('--n_clusters', type=int, default=2, help='Number of clusters [Default: 2]')
 parser.add_argument('--nglob', type=int, default=4, help='Number of global features [default: 2]')
@@ -31,18 +31,19 @@ parser.add_argument('--model', default='gapnet_seg', help='Model name [default: 
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=100, help='Point Number [default: 500]')
 parser.add_argument('--max_epoch', type=int, default=100, help='Epoch to run [default: 100]')
-parser.add_argument('--batch_size', type=int, default=1024, help='Batch Size during training [default: 64]')
+parser.add_argument('--batch_size', type=int, default=1024, help='Batch Size during training [default: 1024]')
 parser.add_argument('--learning_rate', type=float, default=0.01, help='Initial learning rate [default: 0.01]')
 
-parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
+parser.add_argument('--momentum', type=float, default=0.9, help='Initial momentum [default: 0.9]')
 parser.add_argument('--optimizer', default='adam', help='adam or momentum [default: adam]')
-parser.add_argument('--decay_step', type=int, default=2000000, help='Decay step for lr decay [default: 2000000]')
+parser.add_argument('--decay_step', type=int, default=1000000, help='Decay step for lr decay [default: 1000000]')
 parser.add_argument('--wd', type=float, default=0.0, help='Weight Decay [Default: 0.0]')
 parser.add_argument('--decay_rate', type=float, default=0.5, help='Decay rate for lr decay [default: 0.5]')
 parser.add_argument('--output_dir', type=str, default='train_results', help='Directory that stores all training logs and trained models')
 parser.add_argument('--data_dir', default='../h5', help='directory with data [default: hdf5_data]')
 parser.add_argument('--nfeat', type=int, default=7, help='Number of features [default: 8]')
 parser.add_argument('--ncat', type=int, default=21, help='Number of categories [default: 2]')
+parser.add_argument('--nbatches', type=int, default=-1, help='Max number of batches to use for training [default: -1]')
 parser.add_argument('--box', type=int, default=1, help='Black Box number, ignored if RD dataset [default: 1]')
 parser.add_argument('--min', default='loss', help='Condition for early stopping loss or acc [default: loss]')
 parser.add_argument('--RD',  default=False, action='store_true',help='Use RD data set [default: False')
@@ -54,7 +55,6 @@ H5_DIR = FLAGS.data_dir
 RD = FLAGS.RD
 EPOCH_CNT = 0
 MAX_PRETRAIN = 10
-params = ast.literal_eval(FLAGS.params)
 BATCH_SIZE = FLAGS.batch_size
 NUM_GLOB = FLAGS.nglob
 NUM_POINT = FLAGS.num_point
@@ -68,7 +68,7 @@ OPTIMIZER = FLAGS.optimizer
 DECAY_STEP = FLAGS.decay_step
 DECAY_RATE = FLAGS.decay_rate
 
-#MODEL = importlib.import_module(FLAGS.model) # import network module
+
 MODEL_FILE = os.path.join(BASE_DIR, '../models', FLAGS.model+'.py')
 LOG_DIR = os.path.join('..','logs',FLAGS.log_dir)
 
@@ -131,7 +131,7 @@ def train():
             pointclouds_pl,  labels_pl, global_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT,NUM_FEAT,NUM_GLOB) 
 
             is_training_pl = tf.placeholder(tf.bool, shape=())
-            is_full_training = tf.placeholder(tf.bool, shape=())
+
             # Note the global_step=batch parameter to minimize. 
             # That tells the optimizer to helpfully increment the 'batch' parameter for you every time it trains.
             batch = tf.Variable(0)
@@ -141,19 +141,18 @@ def train():
             print("--- Get model and loss")
 
             pred , max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,global_pl = global_pl,
-                                              params=params,bn_decay=bn_decay,
+                                              bn_decay=bn_decay,
                                               num_class=NUM_CLASSES, weight_decay=FLAGS.wd,
             )
             
             
             mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=True) #k centroids
             
-            loss = MODEL.get_focal_loss(pred,labels_pl,NUM_CLASSES)
+            classify_loss = MODEL.get_focal_loss(pred,labels_pl,NUM_CLASSES)
             kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, FLAGS.max_dim,
                                                             FLAGS.n_clusters,alpha)
-            
-            loss = tf.cond(is_full_training,lambda:kmeans_loss + loss,lambda:loss)
-            
+                    
+            full_loss = kmeans_loss + classify_loss
 
             
             print("--- Get training operator")
@@ -164,8 +163,10 @@ def train():
                 optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=MOMENTUM)
             elif OPTIMIZER == 'adam':
                 optimizer = tf.train.AdamOptimizer(learning_rate)
-            train_op = optimizer.minimize(loss, global_step=batch)
-            
+
+            train_op = optimizer.minimize(classify_loss, global_step=batch)
+            train_op_full = optimizer.minimize(full_loss, global_step=batch)
+
             # Add ops to save and restore all the variables.
             saver = tf.train.Saver()
         
@@ -190,13 +191,14 @@ def train():
                'labels_pl':labels_pl,
                'global_pl':global_pl,
                'is_training_pl': is_training_pl,
-               'is_full_training': is_full_training,
                'max_pool':max_pool,
                'pred': pred,
                'alpha': alpha,
                'stack_dist':stack_dist,
-               'loss': loss,
+               'classify_loss': classify_loss,
+               'kmeans_loss': kmeans_loss,
                'train_op': train_op,
+               'train_op_full': train_op_full,
                'merged': merged,
                'step': batch,
         }
@@ -214,13 +216,12 @@ def train():
             sys.stdout.flush()
             
             is_full_training = epoch > MAX_PRETRAIN
-            #is_full_training = False
             
             
             lss = eval_one_epoch(sess, ops, test_writer,is_full_training)
             
             if is_full_training:
-                save_path = saver.save(sess, os.path.join(LOG_DIR, 'cluster_dkm.ckpt'))
+                save_path = saver.save(sess, os.path.join(LOG_DIR, 'cluster.ckpt'))
             else:
                 save_path = saver.save(sess, os.path.join(LOG_DIR, 'model.ckpt'))
             log_string("Model saved in file: %s" % save_path)
@@ -234,7 +235,6 @@ def train():
 def get_batch(data,label,global_pl,  start_idx, end_idx):
     batch_label = label[start_idx:end_idx]
     batch_global = global_pl[start_idx:end_idx,:]
-    #batch_label = label[start_idx:end_idx,:]
     batch_data = data[start_idx:end_idx,:,:]
     return batch_data, batch_label, batch_global
 
@@ -288,7 +288,8 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
         
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
-        #num_batches = 3
+        if FLAGS.nbatches>0:
+            num_batches = FLAGS.nbatches
                                                                 
         log_string(str(datetime.now()))     
    
@@ -302,7 +303,6 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
             #print(batch_weight) 
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['labels_pl']: batch_label,
-                         ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['is_training_pl']: is_training,
                          ops['alpha']: 10*(EPOCH_CNT-MAX_PRETRAIN+1),
@@ -311,7 +311,7 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
             }
             if is_full_training:
                 summary, step, _, loss_val, pred_val,max_pool,dist = sess.run([ops['merged'], ops['step'],
-                                                                               ops['train_op'], ops['loss'],
+                                                                               ops['train_op_full'], ops['kmeans_loss'],
                                                                                ops['pred'],ops['max_pool'],
                                                                                ops['stack_dist']
                                                                            ],
@@ -331,7 +331,7 @@ def train_one_epoch(sess, ops, train_writer,is_full_training):
 
             else:
                 summary, step, _, loss_val, pred_val,max_pool = sess.run([ops['merged'], ops['step'],
-                                                                          ops['train_op'], ops['loss'],
+                                                                          ops['train_op'], ops['classify_loss'],
                                                                           ops['pred'],ops['max_pool']
                                                                       ],
                                                                               
@@ -387,14 +387,13 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
             
             feed_dict = {ops['pointclouds_pl']: batch_data,
                          ops['is_training_pl']: is_training,
-                         ops['is_full_training']:is_full_training,
                          ops['global_pl']: batch_global,
                          ops['labels_pl']: batch_label,
                          ops['alpha']: 10*(EPOCH_CNT-MAX_PRETRAIN+1),
             }
             if is_full_training:
                 summary, step, loss_val, pred_val,max_pool,dist= sess.run([ops['merged'], ops['step'],
-                                                                           ops['loss'], ops['pred'],
+                                                                           ops['kmeans_loss'], ops['pred'],
                                                                            ops['max_pool'],ops['stack_dist'],
                                                                            
                                                                            #ops['pi']
@@ -414,7 +413,7 @@ def eval_one_epoch(sess, ops, test_writer,is_full_training):
 
             else:
                 summary, step, loss_val, pred_val,max_pool= sess.run([ops['merged'], ops['step'],
-                                                                      ops['loss'], ops['pred'],
+                                                                      ops['classify_loss'], ops['pred'],
                                                                       ops['max_pool'],
                                                                   ],
                                                                      feed_dict=feed_dict)

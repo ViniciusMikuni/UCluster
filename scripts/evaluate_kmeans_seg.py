@@ -1,11 +1,9 @@
 import argparse
 import h5py
 from math import *
-import subprocess
 import tensorflow as tf
 import numpy as np
 from datetime import datetime
-from sklearn import metrics
 import json
 import os, ast
 import sys
@@ -25,18 +23,16 @@ import gapnet_seg as MODEL
 
 # DEFAULT SETTINGS
 parser = argparse.ArgumentParser()
-parser.add_argument('--params', default='[50,1,32,64,128,128,2,64,128,128,256,256,256]', help='DNN parameters[[k,H,A,F,F,F,H,A,F,C,F]]')
 parser.add_argument('--gpu', type=int, default=0, help='GPUs to use [default: 0]')
 parser.add_argument('--n_clusters', type=int, default=2, help='Number of clusters [Default: 2]')
 parser.add_argument('--max_dim', type=int, default=2, help='Dimension of the encoding layer [Default: 512]')
-parser.add_argument('--model_path', default='../logs/PU/model.ckpt', help='Model checkpoint path')
-parser.add_argument('--modeln', type=int,default=-1, help='Model number')
-parser.add_argument('--nglob', type=int, default=4, help='Number of global features [default: 2]')
-parser.add_argument('--batch', type=int, default=64, help='Batch Size  during training [default: 64]')
+parser.add_argument('--log_dir', default='anomaly', help='Log dir [default: log]')
+parser.add_argument('--nglob', type=int, default=4, help='Number of global features [default: 4]')
+parser.add_argument('--batch', type=int, default=1024, help='Batch Size  during training [default: 1024]')
 parser.add_argument('--num_point', type=int, default=100, help='Point Number [default: 500]')
-parser.add_argument('--data_dir', default='../h5', help='directory with data [default: ../data/PU]')
-parser.add_argument('--nfeat', type=int, default=7, help='Number of features [default: 8]')
-parser.add_argument('--ncat', type=int, default=21, help='Number of categories [default: 2]')
+parser.add_argument('--data_dir', default='../h5', help='directory with data [default: ../h5]')
+parser.add_argument('--nfeat', type=int, default=7, help='Number of features [default: 7]')
+parser.add_argument('--ncat', type=int, default=21, help='Number of categories [default: 21]')
 parser.add_argument('--name', default="", help='name of the output file')
 parser.add_argument('--h5_folder', default="../h5/", help='folder to store output files')
 parser.add_argument('--box', type=int, default=1, help='Black Box number, ignored if RD dataset [default: 1]')
@@ -44,9 +40,8 @@ parser.add_argument('--RD',  default=False, action='store_true',help='Use RD dat
 parser.add_argument('--full_train',  default=False, action='store_true',help='Use full training [default: False')
 
 FLAGS = parser.parse_args()
-MODEL_PATH = FLAGS.model_path
+LOG_DIR = os.path.join('..','logs',FLAGS.log_dir)
 NUM_GLOB = FLAGS.nglob
-params = ast.literal_eval(FLAGS.params)
 DATA_DIR = FLAGS.data_dir
 H5_DIR = os.path.join(BASE_DIR, DATA_DIR)
 H5_OUT = FLAGS.h5_folder
@@ -109,10 +104,10 @@ def eval():
             batch = tf.Variable(0, trainable=False)
             alpha = tf.placeholder(tf.float32, shape=())
             is_training_pl = tf.placeholder(tf.bool, shape=())
-            pred,max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,params=params,global_pl = global_pl,num_class=NUM_CATEGORIES)
+            pred,max_pool = MODEL.get_model(pointclouds_pl, is_training=is_training_pl,global_pl = global_pl,num_class=NUM_CATEGORIES)
             mu = tf.Variable(tf.zeros(shape=(FLAGS.n_clusters,FLAGS.max_dim)),name="mu",trainable=False) #k centroids
-            loss = MODEL.get_loss(pred, labels_pl,NUM_CATEGORIES)
-            #loss = MODEL.get_focal_loss(labels_pl,pred,NUM_CATEGORIES)
+
+            classify_loss = MODEL.get_focal_loss(pred,labels_pl,NUM_CATEGORIES)
             kmeans_loss, stack_dist= MODEL.get_loss_kmeans(max_pool,mu, FLAGS.max_dim,
                                                            FLAGS.n_clusters,alpha)
 
@@ -127,11 +122,11 @@ def eval():
         #config.log_device_placement = False
         sess = tf.Session(config=config)
         if FULL_TRAINING:
-            saver.restore(sess,os.path.join(MODEL_PATH,'cluster_dkm.ckpt'))
+            saver.restore(sess,os.path.join(LOG_DIR,'cluster.ckpt'))
         else:
-            saver.restore(sess,os.path.join(MODEL_PATH,'model.ckpt'))
+            saver.restore(sess,os.path.join(LOG_DIR,'model.ckpt'))
 
-        #saver.restore(sess,os.path.join(MODEL_PATH,'cluster_dkm.ckpt'))
+
         print('model restored')
         
         
@@ -146,7 +141,7 @@ def eval():
                'pred': pred,
                'alpha': alpha,
                'max_pool': max_pool,
-               'loss': loss,}
+               'classify_loss': classify_loss,}
             
         eval_one_epoch(sess,ops)
 
@@ -159,23 +154,18 @@ def get_batch(data,label,global_pl,  start_idx, end_idx):
         
 def eval_one_epoch(sess,ops):
     is_training = False
-
-    total_correct = total_correct_ones =  total_seen =total_seen_ones= loss_sum =0    
     eval_idxs = np.arange(0, len(EVALUATE_FILES))
+
     y_assign = []
     y_glob =[]
     acc = 0
+
     for fn in range(len(EVALUATE_FILES)):
-        current_file = os.path.join(H5_DIR,EVALUATE_FILES[eval_idxs[fn]])
-        current_truth = []
-        current_mass = []
-        
+        current_file = os.path.join(H5_DIR,EVALUATE_FILES[eval_idxs[fn]])        
         if RD:
             current_data,  current_cluster,current_label = provider.load_h5_data_label_seg(current_file)
         else:
             current_data, current_label = provider.load_h5(current_file,'seg')
-
-
 
         adds = provider.load_add(current_file,['global','masses'])
         
@@ -189,9 +179,6 @@ def eval_one_epoch(sess,ops):
         
         file_size = current_data.shape[0]
         num_batches = file_size // BATCH_SIZE
-
-        
-
         for batch_idx in range(num_batches):
             start_idx = batch_idx * BATCH_SIZE
             end_idx = (batch_idx+1) * BATCH_SIZE
@@ -202,15 +189,14 @@ def eval_one_epoch(sess,ops):
 
 
             feed_dict = {ops['pointclouds_pl']: batch_data,
-                         ops['global_pl']: batch_global,
-                         #ops['labels_pl']: adds['masses'][start_idx:end_idx],
+                         ops['global_pl']: batch_global,                         
                          ops['labels_pl']: batch_label,
-                         ops['alpha']: 100,
+                         ops['alpha']: 1, #No impact during evaluation
                          ops['is_training_pl']: is_training,
             }
 
             dist,mu,max_pool = sess.run([ops['stack_dist'],ops['mu'],
-                                            ops['max_pool']],feed_dict=feed_dict)
+                                         ops['max_pool']],feed_dict=feed_dict)
 
             cluster_assign = np.zeros((cur_batch_size), dtype=int)
             if RD:
@@ -222,6 +208,7 @@ def eval_one_epoch(sess,ops):
                 cluster_assign[i] = index_closest_cluster
                 if RD:
                     acc+=cluster_acc(batch_cluster,cluster_assign)
+                    
             if len(y_assign)==0:                
                 if RD:
                     y_val=batch_cluster
@@ -251,7 +238,7 @@ def eval_one_epoch(sess,ops):
         dset = fh5.create_dataset("max_pool", data=y_pool)
         dset = fh5.create_dataset("global", data=y_glob)
         dset = fh5.create_dataset("masses", data=y_mass)
-        dset = fh5.create_dataset("data", data=current_data[:num_batches*BATCH_SIZE])
+
         
 
 
