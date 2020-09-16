@@ -1,6 +1,6 @@
 # Unsupervised clustering for collider physics (UCluster)
-This repo contains the main code used in the UCluster studies [FUTURE REF], implemented in Tensorflow. 
-The data set used for the comparisons cab e accessed from zenodo in the following links:
+This repo contains the main code used in the UCluster studies [public document coming soon], implemented in Tensorflow. 
+The data set used for the comparisons can be accessed from zenodo in the following links:
 
 * Unsupervised multiclass: https://doi.org/10.5281/zenodo.3602254
 
