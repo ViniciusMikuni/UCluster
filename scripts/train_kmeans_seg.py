@@ -93,8 +93,8 @@ if RD:
     TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_RD.txt'))
     TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_RD.txt'))
 else:
-    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_voxel_b{}.txt'.format(FLAGS.box)))
-    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_voxel_b{}.txt'.format(FLAGS.box)))
+    TRAIN_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'train_files_b{}.txt'.format(FLAGS.box)))
+    TEST_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'test_files_b{}.txt'.format(FLAGS.box)))
                                                                    
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')

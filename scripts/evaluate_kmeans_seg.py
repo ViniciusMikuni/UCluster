@@ -94,7 +94,7 @@ def cluster_acc(y_true, y_pred):
 if RD:
     EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_RD.txt')) # Need to create those
 else:
-    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_voxel_b{}.txt'.format(FLAGS.box))) 
+    EVALUATE_FILES = provider.getDataFiles(os.path.join(H5_DIR, 'evaluate_files_b{}.txt'.format(FLAGS.box))) 
 
   
 def eval():
