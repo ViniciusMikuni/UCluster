@@ -16,6 +16,7 @@ The data set used for the comparisons can be accessed from zenodo in the followi
 
 [scipy](https://www.scipy.org/)
 
+[pyjet](https://github.com/scikit-hep/pyjet)
 
 
 # Instructions
@@ -36,6 +37,18 @@ P = Number of points
 G = Number of global features
 
 For Unsupervised multiclass classification, only the **pid** is required, while for anomaly detection, **label** and **global** are required.
+
+Scripts are provided to save the correct data format from the zenodo files. To save the multiclass classification files run
+
+```bash
+python prepare_data_multi.py --dir path/where/zenodo/file/are
+```
+while the unsupervised anomaly detection is done with
+
+```bash
+python prepare_data_unsup.py --dir path/where/zenodo/file/are [--RD]
+```
+Both scripts will save the output files under the golder ```h5```. 
 
 # Training the unsupervided multiclass classification model
 
