@@ -90,7 +90,7 @@ if __name__=='__main__':
     samples_path = flags.dir
     save_path = flags.out
 
-    samples_path = '/scratch/vmikuni/ML/'
+
     
     #Assuming that the 2 samples were saved under these respective folders
     if make_eval:

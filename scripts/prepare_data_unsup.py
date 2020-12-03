@@ -170,7 +170,6 @@ if __name__=='__main__':
     samples_path = flags.dir
     save_path = flags.out
 
-    samples_path = '/scratch/vmikuni/ML/'
         
 
     if RD:

@@ -1,3 +1,3 @@
-eval_wztop_20v_100P.h5
-train_wztop_20v_100P.h5
-test_wztop_20v_100P.h5
+eval_multi_20v_100P.h5
+train_multi_20v_100P.h5
+test_multi_20v_100P.h5
