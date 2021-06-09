@@ -1,0 +1,2139 @@
+Namespace(batch_size=512, data_dir='../h5', decay_rate=0.5, decay_step=500000, gpu=0, learning_rate=0.001, log_dir='wztop_100p_test', max_dim=3, max_epoch=200, model='gapnet_clasify', momentum=0.9, n_clusters=3, ncat=20, nfeat=8, num_point=100, optimizer='adam', output_dir='train_results', test=False, wd=0.0)
+pid: 24481
+**** EPOCH 000 ****
+2021-04-26 18:16:21.771928
+learning rate: 0.001000
+train mean loss: 0.494479
+train clustering accuracy: 0.000000
+test mean loss: 0.243057
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 001 ****
+2021-04-26 18:19:41.874594
+learning rate: 0.000500
+train mean loss: 0.250588
+train clustering accuracy: 0.000000
+test mean loss: 0.261896
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 002 ****
+2021-04-26 18:22:57.461009
+learning rate: 0.000500
+train mean loss: 0.214271
+train clustering accuracy: 0.000000
+test mean loss: 0.238182
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 003 ****
+2021-04-26 18:26:12.890456
+learning rate: 0.000250
+train mean loss: 0.198750
+train clustering accuracy: 0.000000
+test mean loss: 0.118224
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 004 ****
+2021-04-26 18:29:28.496703
+learning rate: 0.000125
+train mean loss: 0.187631
+train clustering accuracy: 0.000000
+test mean loss: 0.119278
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 005 ****
+2021-04-26 18:32:43.980352
+learning rate: 0.000125
+train mean loss: 0.177356
+train clustering accuracy: 0.000000
+test mean loss: 0.111904
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 006 ****
+2021-04-26 18:35:59.402909
+learning rate: 0.000063
+train mean loss: 0.172763
+train clustering accuracy: 0.000000
+test mean loss: 0.109369
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 007 ****
+2021-04-26 18:39:14.892797
+learning rate: 0.000063
+train mean loss: 0.168538
+train clustering accuracy: 0.000000
+test mean loss: 0.110188
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 008 ****
+2021-04-26 18:42:30.169411
+learning rate: 0.000031
+train mean loss: 0.166032
+train clustering accuracy: 0.000000
+test mean loss: 0.103412
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 009 ****
+2021-04-26 18:45:45.695677
+learning rate: 0.000016
+train mean loss: 0.163872
+train clustering accuracy: 0.000000
+test mean loss: 0.101028
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 010 ****
+2021-04-26 18:49:01.237932
+learning rate: 0.000016
+train mean loss: 0.161537
+train clustering accuracy: 0.000000
+test mean loss: 0.102471
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 011 ****
+2021-04-26 18:52:16.653652
+learning rate: 0.000010
+train mean loss: 0.160611
+train clustering accuracy: 0.000000
+test mean loss: 0.103034
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 012 ****
+2021-04-26 18:55:32.091021
+learning rate: 0.000010
+train mean loss: 0.159833
+train clustering accuracy: 0.000000
+test mean loss: 0.103131
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 013 ****
+2021-04-26 18:58:47.385139
+learning rate: 0.000010
+train mean loss: 0.159526
+train clustering accuracy: 0.000000
+test mean loss: 0.102441
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 014 ****
+2021-04-26 19:02:02.726696
+learning rate: 0.000010
+train mean loss: 0.159241
+train clustering accuracy: 0.000000
+test mean loss: 0.102319
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 015 ****
+2021-04-26 19:05:18.109512
+learning rate: 0.000010
+train mean loss: 0.158961
+train clustering accuracy: 0.000000
+test mean loss: 0.101845
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 016 ****
+2021-04-26 19:08:33.358248
+learning rate: 0.000010
+train mean loss: 0.158695
+train clustering accuracy: 0.000000
+test mean loss: 0.102285
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 017 ****
+2021-04-26 19:11:48.669335
+learning rate: 0.000010
+train mean loss: 0.158434
+train clustering accuracy: 0.000000
+test mean loss: 0.101852
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 018 ****
+2021-04-26 19:15:04.020663
+learning rate: 0.000010
+train mean loss: 0.158176
+train clustering accuracy: 0.000000
+test mean loss: 0.100747
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 019 ****
+2021-04-26 19:18:19.253963
+learning rate: 0.000010
+train mean loss: 0.157927
+train clustering accuracy: 0.000000
+test mean loss: 0.100523
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 020 ****
+2021-04-26 19:21:34.573246
+learning rate: 0.000010
+train mean loss: 0.157684
+train clustering accuracy: 0.000000
+test mean loss: 0.100567
+testing clustering accuracy: 0.000000
+Model saved in file: ../logs/wztop_100p_test/model.ckpt
+**** EPOCH 021 ****
+2021-04-26 19:24:52.094052
+learning rate: 0.000010
+train mean loss: 0.031940
+train clustering accuracy: 0.524346
+mu: [[0.26717085 0.2264222  0.14150746]
+ [0.2483567  0.40761828 0.07625706]
+ [0.23121347 0.67391825 0.0334275 ]]
+test mean loss: 0.049916
+testing clustering accuracy: 0.525191
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 022 ****
+2021-04-26 19:28:12.825138
+learning rate: 0.000010
+train mean loss: 0.020612
+train clustering accuracy: 0.526276
+mu: [[0.26217014 0.23377325 0.1347666 ]
+ [0.2516419  0.40040147 0.08188646]
+ [0.23321073 0.6816087  0.02878473]]
+test mean loss: 0.040606
+testing clustering accuracy: 0.527809
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 023 ****
+2021-04-26 19:31:31.889877
+learning rate: 0.000010
+train mean loss: 0.014981
+train clustering accuracy: 0.532830
+mu: [[0.25920075 0.23974024 0.12957585]
+ [0.25293124 0.3942072  0.08583254]
+ [0.23719263 0.68561405 0.02980354]]
+test mean loss: 0.033106
+testing clustering accuracy: 0.533097
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 024 ****
+2021-04-26 19:34:51.015481
+learning rate: 0.000010
+train mean loss: 0.011601
+train clustering accuracy: 0.543117
+mu: [[0.25713295 0.24550687 0.12522733]
+ [0.25311267 0.38843784 0.08893179]
+ [0.24030383 0.687145   0.03382825]]
+test mean loss: 0.027101
+testing clustering accuracy: 0.541919
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 025 ****
+2021-04-26 19:38:10.072415
+learning rate: 0.000010
+train mean loss: 0.009410
+train clustering accuracy: 0.555927
+mu: [[0.25566918 0.25113773 0.12162077]
+ [0.25271648 0.38301077 0.09137288]
+ [0.24228634 0.6866339  0.03812909]]
+test mean loss: 0.022382
+testing clustering accuracy: 0.555724
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 026 ****
+2021-04-26 19:41:29.150423
+learning rate: 0.000010
+train mean loss: 0.007914
+train clustering accuracy: 0.572979
+mu: [[0.25454956 0.25657153 0.11870766]
+ [0.25210384 0.37785992 0.09315703]
+ [0.24333799 0.68435633 0.0418648 ]]
+test mean loss: 0.018716
+testing clustering accuracy: 0.575893
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 027 ****
+2021-04-26 19:44:48.183461
+learning rate: 0.000010
+train mean loss: 0.006834
+train clustering accuracy: 0.594907
+mu: [[0.25362036 0.2617858  0.1164    ]
+ [0.2514866  0.3729086  0.09428197]
+ [0.24383876 0.6808103  0.04491773]]
+test mean loss: 0.015858
+testing clustering accuracy: 0.599251
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 028 ****
+2021-04-26 19:48:07.255632
+learning rate: 0.000010
+train mean loss: 0.006018
+train clustering accuracy: 0.620813
+mu: [[0.2528362  0.26675794 0.11455634]
+ [0.25093743 0.3680997  0.09477635]
+ [0.24387857 0.6765355  0.04716331]]
+test mean loss: 0.013604
+testing clustering accuracy: 0.629318
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 029 ****
+2021-04-26 19:51:26.304054
+learning rate: 0.000010
+train mean loss: 0.005376
+train clustering accuracy: 0.648785
+mu: [[0.25212362 0.271481   0.11296662]
+ [0.25041798 0.36339986 0.09476686]
+ [0.24363604 0.6719114  0.04873524]]
+test mean loss: 0.011798
+testing clustering accuracy: 0.664926
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 030 ****
+2021-04-26 19:54:45.526957
+learning rate: 0.000010
+train mean loss: 0.004859
+train clustering accuracy: 0.677371
+mu: [[0.25146297 0.2759516  0.11151501]
+ [0.24991603 0.35879737 0.09450439]
+ [0.24319734 0.66714615 0.04983579]]
+test mean loss: 0.010338
+testing clustering accuracy: 0.694542
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 031 ****
+2021-04-26 19:58:04.677140
+learning rate: 0.000010
+train mean loss: 0.004437
+train clustering accuracy: 0.703667
+mu: [[0.25083423 0.28015298 0.11007838]
+ [0.24941489 0.35429415 0.09411091]
+ [0.24263287 0.66233504 0.05050917]]
+test mean loss: 0.009139
+testing clustering accuracy: 0.721832
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 032 ****
+2021-04-26 20:01:23.705592
+learning rate: 0.000010
+train mean loss: 0.004088
+train clustering accuracy: 0.726642
+mu: [[0.25026834 0.2840635  0.10857864]
+ [0.24894057 0.34989902 0.09365003]
+ [0.2419394  0.6575242  0.05091266]]
+test mean loss: 0.008146
+testing clustering accuracy: 0.745084
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 033 ****
+2021-04-26 20:04:42.938270
+learning rate: 0.000010
+train mean loss: 0.003801
+train clustering accuracy: 0.745129
+mu: [[0.24972536 0.28764904 0.10702071]
+ [0.24847563 0.34562638 0.09312659]
+ [0.24117373 0.65273964 0.05106165]]
+test mean loss: 0.007321
+testing clustering accuracy: 0.760257
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 034 ****
+2021-04-26 20:08:02.197630
+learning rate: 0.000010
+train mean loss: 0.003561
+train clustering accuracy: 0.759356
+mu: [[0.24918383 0.29088783 0.10540789]
+ [0.24800025 0.34149426 0.09258989]
+ [0.24033721 0.647979   0.05106034]]
+test mean loss: 0.006629
+testing clustering accuracy: 0.773544
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 035 ****
+2021-04-26 20:11:21.379136
+learning rate: 0.000010
+train mean loss: 0.003361
+train clustering accuracy: 0.770513
+mu: [[0.24865185 0.29376236 0.10375968]
+ [0.24752735 0.3375244  0.09205127]
+ [0.23947252 0.64325625 0.05089551]]
+test mean loss: 0.006049
+testing clustering accuracy: 0.781595
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 036 ****
+2021-04-26 20:14:40.580316
+learning rate: 0.000010
+train mean loss: 0.003195
+train clustering accuracy: 0.778636
+mu: [[0.24808918 0.2962432  0.10208975]
+ [0.24703394 0.33373642 0.09150815]
+ [0.2385901  0.63857293 0.05066134]]
+test mean loss: 0.005562
+testing clustering accuracy: 0.787428
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 037 ****
+2021-04-26 20:17:59.767877
+learning rate: 0.000010
+train mean loss: 0.003054
+train clustering accuracy: 0.784571
+mu: [[0.24754171 0.2983446  0.10040984]
+ [0.24655809 0.33015972 0.09095363]
+ [0.2376594  0.6339282  0.05034367]]
+test mean loss: 0.005146
+testing clustering accuracy: 0.793181
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 038 ****
+2021-04-26 20:21:19.057768
+learning rate: 0.000010
+train mean loss: 0.002934
+train clustering accuracy: 0.788848
+mu: [[0.24698494 0.30008978 0.09876962]
+ [0.2460727  0.3268242  0.09043954]
+ [0.2366706  0.6293413  0.0500492 ]]
+test mean loss: 0.004798
+testing clustering accuracy: 0.796091
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 039 ****
+2021-04-26 20:24:38.114570
+learning rate: 0.000010
+train mean loss: 0.002831
+train clustering accuracy: 0.792113
+mu: [[0.2464043  0.30152294 0.09717374]
+ [0.24557264 0.32376206 0.08992956]
+ [0.23569407 0.6248104  0.04972865]]
+test mean loss: 0.004498
+testing clustering accuracy: 0.799811
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 040 ****
+2021-04-26 20:27:57.240003
+learning rate: 0.000010
+train mean loss: 0.002741
+train clustering accuracy: 0.794363
+mu: [[0.24578457 0.30269188 0.09558946]
+ [0.24503852 0.32100698 0.08937189]
+ [0.2347236  0.62035006 0.04933951]]
+test mean loss: 0.004240
+testing clustering accuracy: 0.801738
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 041 ****
+2021-04-26 20:31:16.429513
+learning rate: 0.000010
+train mean loss: 0.002661
+train clustering accuracy: 0.796055
+mu: [[0.24514925 0.30364415 0.09403612]
+ [0.24449065 0.31858793 0.08877008]
+ [0.23374833 0.61597073 0.04895835]]
+test mean loss: 0.004018
+testing clustering accuracy: 0.802841
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 042 ****
+2021-04-26 20:34:35.595198
+learning rate: 0.000010
+train mean loss: 0.002588
+train clustering accuracy: 0.797116
+mu: [[0.24449389 0.30442816 0.09254763]
+ [0.24392031 0.3165284  0.08813791]
+ [0.23274349 0.6116731  0.04849676]]
+test mean loss: 0.003825
+testing clustering accuracy: 0.803983
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 043 ****
+2021-04-26 20:37:54.761332
+learning rate: 0.000010
+train mean loss: 0.002521
+train clustering accuracy: 0.798068
+mu: [[0.24383853 0.30503082 0.09111477]
+ [0.24334408 0.3148019  0.08745093]
+ [0.23175834 0.6074635  0.04799408]]
+test mean loss: 0.003654
+testing clustering accuracy: 0.804847
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 044 ****
+2021-04-26 20:41:13.934913
+learning rate: 0.000010
+train mean loss: 0.002459
+train clustering accuracy: 0.798633
+mu: [[0.24315871 0.3054963  0.08975271]
+ [0.24273537 0.31339568 0.08672239]
+ [0.2307767  0.603352   0.04749613]]
+test mean loss: 0.003503
+testing clustering accuracy: 0.805219
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 045 ****
+2021-04-26 20:44:33.076381
+learning rate: 0.000010
+train mean loss: 0.002401
+train clustering accuracy: 0.799205
+mu: [[0.24246062 0.30582985 0.0884525 ]
+ [0.2420986  0.31225482 0.0859424 ]
+ [0.22979075 0.5993439  0.04695558]]
+test mean loss: 0.003367
+testing clustering accuracy: 0.805777
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 046 ****
+2021-04-26 20:47:52.423489
+learning rate: 0.000010
+train mean loss: 0.002346
+train clustering accuracy: 0.799661
+mu: [[0.241747   0.30604592 0.0872355 ]
+ [0.2414357  0.31132445 0.08514652]
+ [0.2288075  0.59545827 0.04644198]]
+test mean loss: 0.003244
+testing clustering accuracy: 0.806255
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 047 ****
+2021-04-26 20:51:11.678580
+learning rate: 0.000010
+train mean loss: 0.002293
+train clustering accuracy: 0.800061
+mu: [[0.24101526 0.30614808 0.0860585 ]
+ [0.24074684 0.3105401  0.08430364]
+ [0.22784948 0.59169614 0.04593635]]
+test mean loss: 0.003132
+testing clustering accuracy: 0.806521
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 048 ****
+2021-04-26 20:54:30.901323
+learning rate: 0.000010
+train mean loss: 0.002244
+train clustering accuracy: 0.800385
+mu: [[0.24027413 0.30617166 0.08491812]
+ [0.24003978 0.30987588 0.08342715]
+ [0.22688071 0.5880531  0.04542312]]
+test mean loss: 0.003029
+testing clustering accuracy: 0.806840
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 049 ****
+2021-04-26 20:57:50.121610
+learning rate: 0.000010
+train mean loss: 0.002196
+train clustering accuracy: 0.800695
+mu: [[0.23954605 0.30612707 0.08380903]
+ [0.23933858 0.30929825 0.08252444]
+ [0.22590101 0.58452415 0.0448712 ]]
+test mean loss: 0.002934
+testing clustering accuracy: 0.807053
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 050 ****
+2021-04-26 21:01:09.376671
+learning rate: 0.000010
+train mean loss: 0.002152
+train clustering accuracy: 0.800999
+mu: [[0.23879977 0.30603418 0.0827632 ]
+ [0.23861404 0.30878922 0.08164009]
+ [0.22493467 0.5811211  0.04429512]]
+test mean loss: 0.002847
+testing clustering accuracy: 0.807278
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 051 ****
+2021-04-26 21:04:28.623247
+learning rate: 0.000010
+train mean loss: 0.002109
+train clustering accuracy: 0.801221
+mu: [[0.23805857 0.30588385 0.08174659]
+ [0.23788944 0.30831614 0.08075004]
+ [0.22395852 0.5778457  0.04374268]]
+test mean loss: 0.002765
+testing clustering accuracy: 0.807810
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 052 ****
+2021-04-26 21:07:47.927822
+learning rate: 0.000010
+train mean loss: 0.002069
+train clustering accuracy: 0.801518
+mu: [[0.23729044 0.30570865 0.08077342]
+ [0.23713419 0.3078893  0.07987549]
+ [0.22297156 0.5746932  0.04317909]]
+test mean loss: 0.002686
+testing clustering accuracy: 0.807571
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 053 ****
+2021-04-26 21:11:07.054851
+learning rate: 0.000010
+train mean loss: 0.002030
+train clustering accuracy: 0.801759
+mu: [[0.23653695 0.30549538 0.07979571]
+ [0.2363904  0.30748132 0.07897395]
+ [0.22199762 0.5716554  0.04260913]]
+test mean loss: 0.002614
+testing clustering accuracy: 0.807876
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 054 ****
+2021-04-26 21:14:26.255003
+learning rate: 0.000010
+train mean loss: 0.001993
+train clustering accuracy: 0.802054
+mu: [[0.2357483  0.30526695 0.07885109]
+ [0.23560922 0.30710438 0.07808796]
+ [0.22102809 0.56873465 0.04209198]]
+test mean loss: 0.002547
+testing clustering accuracy: 0.807969
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 055 ****
+2021-04-26 21:17:45.303287
+learning rate: 0.000010
+train mean loss: 0.001958
+train clustering accuracy: 0.802216
+mu: [[0.23496786 0.3050265  0.07791591]
+ [0.23483403 0.3067537  0.0771955 ]
+ [0.22006357 0.56593066 0.04153584]]
+test mean loss: 0.002484
+testing clustering accuracy: 0.808235
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 056 ****
+2021-04-26 21:21:04.310972
+learning rate: 0.000010
+train mean loss: 0.001925
+train clustering accuracy: 0.802364
+mu: [[0.23417763 0.3047643  0.07700109]
+ [0.23404679 0.3064143  0.07630965]
+ [0.21911216 0.56323457 0.04099111]]
+test mean loss: 0.002423
+testing clustering accuracy: 0.808408
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 057 ****
+2021-04-26 21:24:23.346713
+learning rate: 0.000010
+train mean loss: 0.001893
+train clustering accuracy: 0.802539
+mu: [[0.23339152 0.30449045 0.07614007]
+ [0.23326173 0.3060919  0.07546684]
+ [0.2181658  0.5606412  0.04047333]]
+test mean loss: 0.002368
+testing clustering accuracy: 0.808673
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 058 ****
+2021-04-26 21:27:42.451305
+learning rate: 0.000010
+train mean loss: 0.001862
+train clustering accuracy: 0.802622
+mu: [[0.23258077 0.30421278 0.07525855]
+ [0.2324499  0.30579203 0.07459249]
+ [0.21721064 0.5581514  0.03994263]]
+test mean loss: 0.002315
+testing clustering accuracy: 0.808820
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 059 ****
+2021-04-26 21:31:01.635287
+learning rate: 0.000010
+train mean loss: 0.001833
+train clustering accuracy: 0.802718
+mu: [[0.23178631 0.3039158  0.0743839 ]
+ [0.23165247 0.3054989  0.0737141 ]
+ [0.2162733  0.5557644  0.03937368]]
+test mean loss: 0.002267
+testing clustering accuracy: 0.809258
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 060 ****
+2021-04-26 21:34:20.717213
+learning rate: 0.000010
+train mean loss: 0.001805
+train clustering accuracy: 0.802959
+mu: [[0.23098265 0.3036203  0.07353315]
+ [0.23084374 0.3052329  0.07284892]
+ [0.21534769 0.5534686  0.03882547]]
+test mean loss: 0.002217
+testing clustering accuracy: 0.809192
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 061 ****
+2021-04-26 21:37:39.880639
+learning rate: 0.000010
+train mean loss: 0.001778
+train clustering accuracy: 0.803042
+mu: [[0.23019306 0.30330926 0.07268704]
+ [0.23004647 0.30497846 0.07197686]
+ [0.2144347  0.551254   0.03830051]]
+test mean loss: 0.002172
+testing clustering accuracy: 0.809285
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 062 ****
+2021-04-26 21:40:58.937642
+learning rate: 0.000010
+train mean loss: 0.001752
+train clustering accuracy: 0.803114
+mu: [[0.2294067  0.3029742  0.07188521]
+ [0.22924955 0.30473155 0.07113554]
+ [0.21352528 0.5490978  0.0377647 ]]
+test mean loss: 0.002128
+testing clustering accuracy: 0.809378
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 063 ****
+2021-04-26 21:44:18.093259
+learning rate: 0.000010
+train mean loss: 0.001727
+train clustering accuracy: 0.803167
+mu: [[0.22862417 0.30262378 0.07111222]
+ [0.22845311 0.30450422 0.07030823]
+ [0.2126445  0.5470081  0.03727445]]
+test mean loss: 0.002087
+testing clustering accuracy: 0.809657
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 064 ****
+2021-04-26 21:47:37.211124
+learning rate: 0.000010
+train mean loss: 0.001703
+train clustering accuracy: 0.803240
+mu: [[0.22784442 0.30224958 0.07035478]
+ [0.22765529 0.30429444 0.06947848]
+ [0.2117661  0.54498315 0.03675417]]
+test mean loss: 0.002048
+testing clustering accuracy: 0.809736
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 065 ****
+2021-04-26 21:50:56.551856
+learning rate: 0.000010
+train mean loss: 0.001680
+train clustering accuracy: 0.803306
+mu: [[0.22707957 0.30185306 0.06961725]
+ [0.2268673  0.3041137  0.06864668]
+ [0.21090393 0.54302156 0.03622511]]
+test mean loss: 0.002011
+testing clustering accuracy: 0.809816
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 066 ****
+2021-04-26 21:54:15.888791
+learning rate: 0.000010
+train mean loss: 0.001658
+train clustering accuracy: 0.803372
+mu: [[0.22631903 0.30142486 0.06888002]
+ [0.22607726 0.30396456 0.06778778]
+ [0.21006374 0.54111916 0.03569875]]
+test mean loss: 0.001975
+testing clustering accuracy: 0.809829
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 067 ****
+2021-04-26 21:57:34.994178
+learning rate: 0.000010
+train mean loss: 0.001637
+train clustering accuracy: 0.803392
+mu: [[0.22558846 0.30096287 0.06817028]
+ [0.22530869 0.30386236 0.06691971]
+ [0.20924035 0.53928244 0.03516304]]
+test mean loss: 0.001940
+testing clustering accuracy: 0.809763
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 068 ****
+2021-04-26 22:00:54.306270
+learning rate: 0.000010
+train mean loss: 0.001616
+train clustering accuracy: 0.803362
+mu: [[0.22485845 0.3004427  0.0675016 ]
+ [0.22452936 0.303805   0.06604758]
+ [0.20840284 0.5375061  0.0346459 ]]
+test mean loss: 0.001908
+testing clustering accuracy: 0.809710
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 069 ****
+2021-04-26 22:04:13.504900
+learning rate: 0.000010
+train mean loss: 0.001596
+train clustering accuracy: 0.803412
+mu: [[0.22414938 0.2998521  0.0668907 ]
+ [0.22375678 0.30380955 0.06517617]
+ [0.20758292 0.5357829  0.03416723]]
+test mean loss: 0.001877
+testing clustering accuracy: 0.809630
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 070 ****
+2021-04-26 22:07:32.717603
+learning rate: 0.000010
+train mean loss: 0.001577
+train clustering accuracy: 0.803379
+mu: [[0.22345875 0.29917097 0.0663152 ]
+ [0.22298472 0.3038921  0.06426746]
+ [0.20676754 0.534115   0.0336996 ]]
+test mean loss: 0.001848
+testing clustering accuracy: 0.809604
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 071 ****
+2021-04-26 22:10:51.992578
+learning rate: 0.000010
+train mean loss: 0.001559
+train clustering accuracy: 0.803346
+mu: [[0.22276755 0.29839665 0.06582931]
+ [0.22218946 0.30409294 0.06335607]
+ [0.20596726 0.5325004  0.03323742]]
+test mean loss: 0.001820
+testing clustering accuracy: 0.809617
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 072 ****
+2021-04-26 22:14:11.228254
+learning rate: 0.000010
+train mean loss: 0.001541
+train clustering accuracy: 0.803220
+mu: [[0.22208337 0.29749945 0.06539398]
+ [0.22137593 0.3044268  0.06238302]
+ [0.20518477 0.53094065 0.03273621]]
+test mean loss: 0.001794
+testing clustering accuracy: 0.809218
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 073 ****
+2021-04-26 22:17:30.606470
+learning rate: 0.000010
+train mean loss: 0.001523
+train clustering accuracy: 0.803038
+mu: [[0.2214107  0.29645678 0.06502576]
+ [0.22054283 0.30490753 0.06135327]
+ [0.2043932  0.52943075 0.03227701]]
+test mean loss: 0.001771
+testing clustering accuracy: 0.809271
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 074 ****
+2021-04-26 22:20:49.955510
+learning rate: 0.000010
+train mean loss: 0.001506
+train clustering accuracy: 0.802662
+mu: [[0.22074988 0.2952763  0.0647637 ]
+ [0.21969403 0.30553952 0.06030999]
+ [0.20360895 0.52798903 0.03183541]]
+test mean loss: 0.001750
+testing clustering accuracy: 0.808913
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 075 ****
+2021-04-26 22:24:09.304017
+learning rate: 0.000010
+train mean loss: 0.001489
+train clustering accuracy: 0.802407
+mu: [[0.22011855 0.29398328 0.06454994]
+ [0.21885368 0.30628407 0.05922786]
+ [0.20282799 0.5266283  0.0314199 ]]
+test mean loss: 0.001732
+testing clustering accuracy: 0.808607
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 076 ****
+2021-04-26 22:27:28.524859
+learning rate: 0.000010
+train mean loss: 0.001474
+train clustering accuracy: 0.802064
+mu: [[0.21947412 0.2926611  0.06435916]
+ [0.2179977  0.30708486 0.05814393]
+ [0.20204696 0.52535754 0.03098691]]
+test mean loss: 0.001715
+testing clustering accuracy: 0.808076
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 077 ****
+2021-04-26 22:30:47.794940
+learning rate: 0.000010
+train mean loss: 0.001458
+train clustering accuracy: 0.801717
+mu: [[0.21884495 0.29138622 0.06414891]
+ [0.21717013 0.30783805 0.05709569]
+ [0.20126234 0.5241616  0.03056065]]
+test mean loss: 0.001702
+testing clustering accuracy: 0.807876
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 078 ****
+2021-04-26 22:34:07.179014
+learning rate: 0.000010
+train mean loss: 0.001444
+train clustering accuracy: 0.801307
+mu: [[0.21819648 0.29025286 0.06386349]
+ [0.21635213 0.3084691  0.0560929 ]
+ [0.2004755  0.52302814 0.0301112 ]]
+test mean loss: 0.001688
+testing clustering accuracy: 0.807239
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 079 ****
+2021-04-26 22:37:26.463901
+learning rate: 0.000010
+train mean loss: 0.001430
+train clustering accuracy: 0.801062
+mu: [[0.21754988 0.28928345 0.06352949]
+ [0.21557006 0.3089231  0.05518949]
+ [0.19969942 0.5219416  0.02966707]]
+test mean loss: 0.001675
+testing clustering accuracy: 0.806866
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 080 ****
+2021-04-26 22:40:45.896221
+learning rate: 0.000010
+train mean loss: 0.001417
+train clustering accuracy: 0.800837
+mu: [[0.21687295 0.2884745  0.06314023]
+ [0.21479058 0.30920652 0.05436996]
+ [0.19894299 0.52089214 0.02923205]]
+test mean loss: 0.001661
+testing clustering accuracy: 0.806614
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 081 ****
+2021-04-26 22:44:05.225884
+learning rate: 0.000010
+train mean loss: 0.001405
+train clustering accuracy: 0.800639
+mu: [[0.21617983 0.2878076  0.06271379]
+ [0.21402206 0.30935746 0.05362185]
+ [0.19819383 0.5198588  0.0288179 ]]
+test mean loss: 0.001646
+testing clustering accuracy: 0.806269
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 082 ****
+2021-04-26 22:47:24.400047
+learning rate: 0.000010
+train mean loss: 0.001393
+train clustering accuracy: 0.800395
+mu: [[0.2154892  0.2872373  0.06225499]
+ [0.21327256 0.3094025  0.05292708]
+ [0.19746299 0.5188383  0.0284119 ]]
+test mean loss: 0.001630
+testing clustering accuracy: 0.805843
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 083 ****
+2021-04-26 22:50:43.762465
+learning rate: 0.000010
+train mean loss: 0.001381
+train clustering accuracy: 0.800239
+mu: [[0.21480244 0.2867358  0.06180035]
+ [0.21253921 0.30938148 0.05228778]
+ [0.19674116 0.51783746 0.02803885]]
+test mean loss: 0.001616
+testing clustering accuracy: 0.805764
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 084 ****
+2021-04-26 22:54:02.955609
+learning rate: 0.000010
+train mean loss: 0.001370
+train clustering accuracy: 0.800127
+mu: [[0.21411245 0.28627232 0.06133238]
+ [0.21180576 0.30931285 0.05166702]
+ [0.19599748 0.5168423  0.02766153]]
+test mean loss: 0.001601
+testing clustering accuracy: 0.805525
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 085 ****
+2021-04-26 22:57:22.003133
+learning rate: 0.000010
+train mean loss: 0.001359
+train clustering accuracy: 0.799965
+mu: [[0.21344265 0.28584835 0.06086063]
+ [0.21109739 0.30922496 0.05106103]
+ [0.19527698 0.51585925 0.02727659]]
+test mean loss: 0.001588
+testing clustering accuracy: 0.806056
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 086 ****
+2021-04-26 23:00:41.291401
+learning rate: 0.000010
+train mean loss: 0.001348
+train clustering accuracy: 0.799869
+mu: [[0.21276462 0.28545225 0.06039384]
+ [0.21038438 0.30912554 0.05047547]
+ [0.19456136 0.51489514 0.02691517]]
+test mean loss: 0.001572
+testing clustering accuracy: 0.805498
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 087 ****
+2021-04-26 23:04:00.289567
+learning rate: 0.000010
+train mean loss: 0.001337
+train clustering accuracy: 0.799744
+mu: [[0.21207276 0.285066   0.05992365]
+ [0.2096619  0.30900592 0.04990895]
+ [0.19384599 0.51395005 0.0265641 ]]
+test mean loss: 0.001559
+testing clustering accuracy: 0.805418
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 088 ****
+2021-04-26 23:07:19.415601
+learning rate: 0.000010
+train mean loss: 0.001327
+train clustering accuracy: 0.799684
+mu: [[0.21139935 0.28470218 0.05945225]
+ [0.20896015 0.30888012 0.04935728]
+ [0.19313622 0.51302814 0.02626308]]
+test mean loss: 0.001545
+testing clustering accuracy: 0.805525
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 089 ****
+2021-04-26 23:10:38.670780
+learning rate: 0.000010
+train mean loss: 0.001316
+train clustering accuracy: 0.799668
+mu: [[0.21072389 0.28434452 0.05900357]
+ [0.2082577  0.30874386 0.04882933]
+ [0.19242895 0.5121099  0.02594057]]
+test mean loss: 0.001533
+testing clustering accuracy: 0.805405
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 090 ****
+2021-04-26 23:13:57.803487
+learning rate: 0.000010
+train mean loss: 0.001306
+train clustering accuracy: 0.799585
+mu: [[0.21005416 0.28399742 0.05855079]
+ [0.2075603  0.3085983  0.0483053 ]
+ [0.19171806 0.5111971  0.02562747]]
+test mean loss: 0.001519
+testing clustering accuracy: 0.805339
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 091 ****
+2021-04-26 23:17:16.752473
+learning rate: 0.000010
+train mean loss: 0.001296
+train clustering accuracy: 0.799486
+mu: [[0.20937952 0.2836697  0.05806656]
+ [0.20686027 0.30845484 0.04775591]
+ [0.19101156 0.5102983  0.02528656]]
+test mean loss: 0.001506
+testing clustering accuracy: 0.804980
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 092 ****
+2021-04-26 23:20:35.840142
+learning rate: 0.000010
+train mean loss: 0.001287
+train clustering accuracy: 0.799463
+mu: [[0.20870766 0.28334865 0.05761949]
+ [0.20616485 0.30830675 0.04725514]
+ [0.190314   0.5094241  0.02498423]]
+test mean loss: 0.001494
+testing clustering accuracy: 0.805153
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 093 ****
+2021-04-26 23:23:54.914056
+learning rate: 0.000010
+train mean loss: 0.001277
+train clustering accuracy: 0.799443
+mu: [[0.2080338  0.28302932 0.05721603]
+ [0.20547011 0.30815142 0.04679109]
+ [0.18964209 0.50854975 0.02466346]]
+test mean loss: 0.001482
+testing clustering accuracy: 0.805113
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 094 ****
+2021-04-26 23:27:13.990282
+learning rate: 0.000010
+train mean loss: 0.001268
+train clustering accuracy: 0.799403
+mu: [[0.20737119 0.2827158  0.05680961]
+ [0.204786   0.3079894  0.04633004]
+ [0.18896298 0.5076827  0.02435214]]
+test mean loss: 0.001470
+testing clustering accuracy: 0.805179
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 095 ****
+2021-04-26 23:30:33.267735
+learning rate: 0.000010
+train mean loss: 0.001259
+train clustering accuracy: 0.799340
+mu: [[0.20672396 0.2824048  0.05639697]
+ [0.20412073 0.30782378 0.0458663 ]
+ [0.18830124 0.50683266 0.02404195]]
+test mean loss: 0.001459
+testing clustering accuracy: 0.805206
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 096 ****
+2021-04-26 23:33:52.303082
+learning rate: 0.000010
+train mean loss: 0.001250
+train clustering accuracy: 0.799241
+mu: [[0.2060704  0.2821151  0.05598028]
+ [0.20345013 0.30766293 0.04540337]
+ [0.18763696 0.505991   0.0237315 ]]
+test mean loss: 0.001446
+testing clustering accuracy: 0.804807
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 097 ****
+2021-04-26 23:37:11.526161
+learning rate: 0.000010
+train mean loss: 0.001241
+train clustering accuracy: 0.799195
+mu: [[0.20542188 0.2818194  0.05555954]
+ [0.20278518 0.30749172 0.04493996]
+ [0.1869794  0.50516355 0.02343622]]
+test mean loss: 0.001436
+testing clustering accuracy: 0.804927
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 098 ****
+2021-04-26 23:40:30.789108
+learning rate: 0.000010
+train mean loss: 0.001232
+train clustering accuracy: 0.799116
+mu: [[0.20477694 0.28153944 0.05514722]
+ [0.20212395 0.30732515 0.0444895 ]
+ [0.18632817 0.5043443  0.02314607]]
+test mean loss: 0.001426
+testing clustering accuracy: 0.804940
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 099 ****
+2021-04-26 23:43:49.969536
+learning rate: 0.000010
+train mean loss: 0.001224
+train clustering accuracy: 0.799119
+mu: [[0.20414346 0.28126156 0.05474228]
+ [0.20147231 0.30715573 0.04404892]
+ [0.18566823 0.50354725 0.02286918]]
+test mean loss: 0.001415
+testing clustering accuracy: 0.804754
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 100 ****
+2021-04-26 23:47:09.109588
+learning rate: 0.000010
+train mean loss: 0.001216
+train clustering accuracy: 0.799007
+mu: [[0.2035156  0.28097335 0.05434885]
+ [0.20082755 0.3069758  0.04362227]
+ [0.18501623 0.5027615  0.02260468]]
+test mean loss: 0.001404
+testing clustering accuracy: 0.804608
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 101 ****
+2021-04-26 23:50:28.122947
+learning rate: 0.000010
+train mean loss: 0.001208
+train clustering accuracy: 0.798974
+mu: [[0.20288531 0.28070858 0.05394341]
+ [0.20018306 0.30681092 0.04318394]
+ [0.18437308 0.5020026  0.02232997]]
+test mean loss: 0.001394
+testing clustering accuracy: 0.804555
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 102 ****
+2021-04-26 23:53:47.198277
+learning rate: 0.000010
+train mean loss: 0.001200
+train clustering accuracy: 0.798888
+mu: [[0.20226361 0.28043267 0.05357784]
+ [0.19954403 0.30663583 0.0427887 ]
+ [0.18372212 0.5012462  0.0220767 ]]
+test mean loss: 0.001384
+testing clustering accuracy: 0.804501
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 103 ****
+2021-04-26 23:57:06.291698
+learning rate: 0.000010
+train mean loss: 0.001192
+train clustering accuracy: 0.798822
+mu: [[0.20164737 0.28015268 0.05319222]
+ [0.19890864 0.30645144 0.04237632]
+ [0.18307284 0.5004962  0.02180143]]
+test mean loss: 0.001375
+testing clustering accuracy: 0.804555
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 104 ****
+2021-04-27 00:00:25.380470
+learning rate: 0.000010
+train mean loss: 0.001185
+train clustering accuracy: 0.798779
+mu: [[0.20102152 0.2798924  0.05282366]
+ [0.1982692  0.3062737  0.04198762]
+ [0.18243979 0.4997522  0.02155781]]
+test mean loss: 0.001366
+testing clustering accuracy: 0.804754
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 105 ****
+2021-04-27 00:03:44.559071
+learning rate: 0.000010
+train mean loss: 0.001177
+train clustering accuracy: 0.798719
+mu: [[0.20039384 0.27964017 0.05247715]
+ [0.19763176 0.30609894 0.04162659]
+ [0.18182543 0.49902466 0.02132339]]
+test mean loss: 0.001356
+testing clustering accuracy: 0.804634
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 106 ****
+2021-04-27 00:07:03.612567
+learning rate: 0.000010
+train mean loss: 0.001170
+train clustering accuracy: 0.798597
+mu: [[0.19976592 0.27939323 0.0521005 ]
+ [0.1969935  0.30592418 0.04123235]
+ [0.18119471 0.49830562 0.02108058]]
+test mean loss: 0.001347
+testing clustering accuracy: 0.804276
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 107 ****
+2021-04-27 00:10:22.682049
+learning rate: 0.000010
+train mean loss: 0.001162
+train clustering accuracy: 0.798537
+mu: [[0.19914272 0.27915725 0.05172827]
+ [0.19636065 0.3057567  0.04084912]
+ [0.18057275 0.49760023 0.02084111]]
+test mean loss: 0.001339
+testing clustering accuracy: 0.804209
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 108 ****
+2021-04-27 00:13:41.813358
+learning rate: 0.000010
+train mean loss: 0.001155
+train clustering accuracy: 0.798491
+mu: [[0.1985198  0.2789221  0.05136513]
+ [0.19572845 0.30558565 0.04047092]
+ [0.17995524 0.49689922 0.02058764]]
+test mean loss: 0.001329
+testing clustering accuracy: 0.803997
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 109 ****
+2021-04-27 00:17:00.906182
+learning rate: 0.000010
+train mean loss: 0.001148
+train clustering accuracy: 0.798362
+mu: [[0.1978852  0.2786899  0.05101751]
+ [0.19508852 0.30541712 0.04011807]
+ [0.17934017 0.49622232 0.02037626]]
+test mean loss: 0.001321
+testing clustering accuracy: 0.804050
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 110 ****
+2021-04-27 00:20:20.008116
+learning rate: 0.000010
+train mean loss: 0.001142
+train clustering accuracy: 0.798316
+mu: [[0.19726144 0.27845764 0.050671  ]
+ [0.19445813 0.3052479  0.03975964]
+ [0.17872727 0.49555674 0.02015812]]
+test mean loss: 0.001313
+testing clustering accuracy: 0.804196
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 111 ****
+2021-04-27 00:23:39.130227
+learning rate: 0.000010
+train mean loss: 0.001135
+train clustering accuracy: 0.798270
+mu: [[0.1966386  0.27822983 0.05031507]
+ [0.19382997 0.30508044 0.03939462]
+ [0.17811705 0.494898   0.01993754]]
+test mean loss: 0.001305
+testing clustering accuracy: 0.804050
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 112 ****
+2021-04-27 00:26:58.066050
+learning rate: 0.000010
+train mean loss: 0.001129
+train clustering accuracy: 0.798170
+mu: [[0.19602974 0.27800438 0.04997541]
+ [0.19321196 0.30491656 0.0390484 ]
+ [0.17751268 0.49425992 0.0197217 ]]
+test mean loss: 0.001298
+testing clustering accuracy: 0.804169
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 113 ****
+2021-04-27 00:30:17.130696
+learning rate: 0.000010
+train mean loss: 0.001122
+train clustering accuracy: 0.798128
+mu: [[0.19541818 0.27776837 0.04964816]
+ [0.19259647 0.30474287 0.03871404]
+ [0.17692287 0.49362698 0.01952341]]
+test mean loss: 0.001289
+testing clustering accuracy: 0.803864
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 114 ****
+2021-04-27 00:33:36.162572
+learning rate: 0.000010
+train mean loss: 0.001116
+train clustering accuracy: 0.798058
+mu: [[0.19480532 0.2775299  0.04933105]
+ [0.191979   0.3045633  0.03838689]
+ [0.17632964 0.49299756 0.01932299]]
+test mean loss: 0.001282
+testing clustering accuracy: 0.804076
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 115 ****
+2021-04-27 00:36:55.280491
+learning rate: 0.000010
+train mean loss: 0.001110
+train clustering accuracy: 0.797966
+mu: [[0.1942083  0.27730006 0.04900092]
+ [0.19137207 0.30438575 0.0380522 ]
+ [0.17572507 0.49237046 0.01911935]]
+test mean loss: 0.001275
+testing clustering accuracy: 0.803877
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 116 ****
+2021-04-27 00:40:14.430610
+learning rate: 0.000010
+train mean loss: 0.001104
+train clustering accuracy: 0.797896
+mu: [[0.19361252 0.27707663 0.04866769]
+ [0.19076756 0.3042093  0.0377128 ]
+ [0.17512195 0.49175024 0.01890818]]
+test mean loss: 0.001268
+testing clustering accuracy: 0.803824
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 117 ****
+2021-04-27 00:43:33.671328
+learning rate: 0.000010
+train mean loss: 0.001098
+train clustering accuracy: 0.797853
+mu: [[0.1930237  0.27685598 0.04833793]
+ [0.19016936 0.3040334  0.03737731]
+ [0.17451817 0.49113026 0.01871108]]
+test mean loss: 0.001260
+testing clustering accuracy: 0.803691
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 118 ****
+2021-04-27 00:46:52.986650
+learning rate: 0.000010
+train mean loss: 0.001092
+train clustering accuracy: 0.797728
+mu: [[0.19243005 0.27662557 0.04803027]
+ [0.18956776 0.30385152 0.03706197]
+ [0.17392257 0.49051142 0.018506  ]]
+test mean loss: 0.001253
+testing clustering accuracy: 0.803625
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 119 ****
+2021-04-27 00:50:12.192727
+learning rate: 0.000010
+train mean loss: 0.001086
+train clustering accuracy: 0.797685
+mu: [[0.19184422 0.276416   0.04771332]
+ [0.18897668 0.30368182 0.03674258]
+ [0.1733432  0.48990878 0.01831427]]
+test mean loss: 0.001245
+testing clustering accuracy: 0.803053
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 120 ****
+2021-04-27 00:53:31.439634
+learning rate: 0.000010
+train mean loss: 0.001080
+train clustering accuracy: 0.797635
+mu: [[0.19126078 0.27620143 0.04740645]
+ [0.18838531 0.30350724 0.03643291]
+ [0.17275782 0.4893058  0.01812201]]
+test mean loss: 0.001240
+testing clustering accuracy: 0.803465
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 121 ****
+2021-04-27 00:56:50.689505
+learning rate: 0.000010
+train mean loss: 0.001075
+train clustering accuracy: 0.797562
+mu: [[0.19068033 0.275985   0.04709602]
+ [0.18779844 0.30332714 0.03611676]
+ [0.17218426 0.48870593 0.01791534]]
+test mean loss: 0.001232
+testing clustering accuracy: 0.803399
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 122 ****
+2021-04-27 01:00:09.810376
+learning rate: 0.000010
+train mean loss: 0.001069
+train clustering accuracy: 0.797457
+mu: [[0.19010179 0.27576643 0.04679119]
+ [0.18721327 0.3031453  0.03580973]
+ [0.17161587 0.48810288 0.01772225]]
+test mean loss: 0.001227
+testing clustering accuracy: 0.803199
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 123 ****
+2021-04-27 01:03:29.021243
+learning rate: 0.000010
+train mean loss: 0.001064
+train clustering accuracy: 0.797427
+mu: [[0.18952626 0.27555573 0.04647256]
+ [0.1866323  0.30296656 0.03548678]
+ [0.17104468 0.4875169  0.01750467]]
+test mean loss: 0.001220
+testing clustering accuracy: 0.803771
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 124 ****
+2021-04-27 01:06:48.259200
+learning rate: 0.000010
+train mean loss: 0.001058
+train clustering accuracy: 0.797318
+mu: [[0.18895207 0.2753512  0.04617237]
+ [0.18605138 0.30279234 0.03518949]
+ [0.17047614 0.48693782 0.01732078]]
+test mean loss: 0.001214
+testing clustering accuracy: 0.803478
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 125 ****
+2021-04-27 01:10:07.317292
+learning rate: 0.000010
+train mean loss: 0.001053
+train clustering accuracy: 0.797219
+mu: [[0.18837571 0.2751485  0.04587366]
+ [0.18547247 0.30261946 0.03488898]
+ [0.16991381 0.4863618  0.01712644]]
+test mean loss: 0.001207
+testing clustering accuracy: 0.803385
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 126 ****
+2021-04-27 01:13:26.471014
+learning rate: 0.000010
+train mean loss: 0.001048
+train clustering accuracy: 0.797136
+mu: [[0.1878044  0.27494165 0.04557462]
+ [0.18489484 0.30244532 0.0345901 ]
+ [0.16933951 0.4857941  0.01693775]]
+test mean loss: 0.001202
+testing clustering accuracy: 0.803239
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 127 ****
+2021-04-27 01:16:45.592547
+learning rate: 0.000010
+train mean loss: 0.001043
+train clustering accuracy: 0.797050
+mu: [[0.1872267  0.27473137 0.04527047]
+ [0.18431367 0.3022628  0.03428183]
+ [0.16876605 0.48522878 0.01673811]]
+test mean loss: 0.001197
+testing clustering accuracy: 0.803359
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 128 ****
+2021-04-27 01:20:04.742543
+learning rate: 0.000010
+train mean loss: 0.001038
+train clustering accuracy: 0.797024
+mu: [[0.18666005 0.2745291  0.04497198]
+ [0.18374078 0.30208325 0.03398421]
+ [0.16818942 0.4846591  0.01654699]]
+test mean loss: 0.001190
+testing clustering accuracy: 0.803332
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 129 ****
+2021-04-27 01:23:23.901607
+learning rate: 0.000010
+train mean loss: 0.001033
+train clustering accuracy: 0.796961
+mu: [[0.1860792  0.2743364  0.04468527]
+ [0.18315856 0.30191082 0.03370322]
+ [0.16763212 0.48410165 0.01636655]]
+test mean loss: 0.001184
+testing clustering accuracy: 0.803213
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 130 ****
+2021-04-27 01:26:43.880948
+learning rate: 0.000010
+train mean loss: 0.001027
+train clustering accuracy: 0.796855
+mu: [[0.18550895 0.27414212 0.04439579]
+ [0.1825832  0.30173674 0.03341654]
+ [0.16706592 0.4835366  0.01617552]]
+test mean loss: 0.001178
+testing clustering accuracy: 0.803053
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 131 ****
+2021-04-27 01:30:03.305447
+learning rate: 0.000010
+train mean loss: 0.001022
+train clustering accuracy: 0.796792
+mu: [[0.18494861 0.27395326 0.04410117]
+ [0.18201686 0.30156395 0.03312439]
+ [0.16649857 0.48297495 0.01598014]]
+test mean loss: 0.001172
+testing clustering accuracy: 0.803027
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 132 ****
+2021-04-27 01:33:22.632140
+learning rate: 0.000010
+train mean loss: 0.001017
+train clustering accuracy: 0.796683
+mu: [[0.18438089 0.27377295 0.04379998]
+ [0.18144721 0.3013961  0.03282491]
+ [0.16594335 0.48242182 0.01576942]]
+test mean loss: 0.001166
+testing clustering accuracy: 0.803093
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 133 ****
+2021-04-27 01:36:41.832665
+learning rate: 0.000010
+train mean loss: 0.001012
+train clustering accuracy: 0.796617
+mu: [[0.18381372 0.27358937 0.04350028]
+ [0.18087886 0.3012262  0.03252809]
+ [0.16539292 0.4818747  0.01557725]]
+test mean loss: 0.001160
+testing clustering accuracy: 0.803053
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 134 ****
+2021-04-27 01:40:01.302853
+learning rate: 0.000010
+train mean loss: 0.001008
+train clustering accuracy: 0.796521
+mu: [[0.18325971 0.27340463 0.04321055]
+ [0.18031898 0.3010568  0.03224855]
+ [0.16484281 0.48133752 0.01540187]]
+test mean loss: 0.001155
+testing clustering accuracy: 0.802602
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 135 ****
+2021-04-27 01:43:20.694352
+learning rate: 0.000010
+train mean loss: 0.001003
+train clustering accuracy: 0.796495
+mu: [[0.18270883 0.27323315 0.04294341]
+ [0.17976296 0.30089715 0.03199503]
+ [0.16430014 0.48081037 0.01525182]]
+test mean loss: 0.001150
+testing clustering accuracy: 0.802920
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 136 ****
+2021-04-27 01:46:40.141824
+learning rate: 0.000010
+train mean loss: 0.000998
+train clustering accuracy: 0.796393
+mu: [[0.1821579  0.27305335 0.04266853]
+ [0.17920864 0.30073065 0.03172852]
+ [0.16375947 0.48028755 0.0150903 ]]
+test mean loss: 0.001143
+testing clustering accuracy: 0.802575
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 137 ****
+2021-04-27 01:50:03.880840
+learning rate: 0.000010
+train mean loss: 0.000994
+train clustering accuracy: 0.796290
+mu: [[0.18161677 0.27287245 0.04238173]
+ [0.17866094 0.30056173 0.03144778]
+ [0.16320993 0.4797643  0.0149061 ]]
+test mean loss: 0.001138
+testing clustering accuracy: 0.802548
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 138 ****
+2021-04-27 01:53:24.487011
+learning rate: 0.000010
+train mean loss: 0.000989
+train clustering accuracy: 0.796191
+mu: [[0.18107404 0.2727018  0.04209919]
+ [0.17811422 0.3004003  0.03117721]
+ [0.16266988 0.47924924 0.01473768]]
+test mean loss: 0.001132
+testing clustering accuracy: 0.802522
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 139 ****
+2021-04-27 01:56:43.856599
+learning rate: 0.000010
+train mean loss: 0.000985
+train clustering accuracy: 0.796049
+mu: [[0.1805267  0.27252924 0.04183898]
+ [0.17756608 0.30023962 0.03092276]
+ [0.16214019 0.47874245 0.01457032]]
+test mean loss: 0.001128
+testing clustering accuracy: 0.802243
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 140 ****
+2021-04-27 02:00:07.883636
+learning rate: 0.000010
+train mean loss: 0.000980
+train clustering accuracy: 0.796006
+mu: [[0.179987   0.27235568 0.04158027]
+ [0.1770238  0.30007663 0.0306726 ]
+ [0.1616121  0.4782345  0.01441528]]
+test mean loss: 0.001123
+testing clustering accuracy: 0.802376
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 141 ****
+2021-04-27 02:03:27.400963
+learning rate: 0.000010
+train mean loss: 0.000976
+train clustering accuracy: 0.795897
+mu: [[0.17945638 0.2721838  0.04131031]
+ [0.17649132 0.2999143  0.03040807]
+ [0.16108431 0.47773784 0.01424631]]
+test mean loss: 0.001118
+testing clustering accuracy: 0.802455
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 142 ****
+2021-04-27 02:06:46.797352
+learning rate: 0.000010
+train mean loss: 0.000972
+train clustering accuracy: 0.795801
+mu: [[0.17892446 0.27201375 0.04106   ]
+ [0.17595592 0.29975402 0.0301671 ]
+ [0.16055894 0.47723958 0.01408646]]
+test mean loss: 0.001113
+testing clustering accuracy: 0.802522
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 143 ****
+2021-04-27 02:10:06.153339
+learning rate: 0.000010
+train mean loss: 0.000967
+train clustering accuracy: 0.795682
+mu: [[0.17839292 0.2718486  0.04080899]
+ [0.17542452 0.299598   0.02992446]
+ [0.16004397 0.4767563  0.01393386]]
+test mean loss: 0.001107
+testing clustering accuracy: 0.802004
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 144 ****
+2021-04-27 02:13:25.582174
+learning rate: 0.000010
+train mean loss: 0.000963
+train clustering accuracy: 0.795560
+mu: [[0.17787175 0.2716788  0.04058056]
+ [0.17489912 0.29943985 0.02970336]
+ [0.15952739 0.47626895 0.01379277]]
+test mean loss: 0.001104
+testing clustering accuracy: 0.802415
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 145 ****
+2021-04-27 02:16:45.020343
+learning rate: 0.000010
+train mean loss: 0.000959
+train clustering accuracy: 0.795530
+mu: [[0.17735341 0.27150968 0.04033094]
+ [0.1743762  0.2992778  0.02945843]
+ [0.15900776 0.47578126 0.01362743]]
+test mean loss: 0.001099
+testing clustering accuracy: 0.802734
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 146 ****
+2021-04-27 02:20:07.229995
+learning rate: 0.000010
+train mean loss: 0.000955
+train clustering accuracy: 0.795421
+mu: [[0.17683113 0.2713416  0.04008081]
+ [0.17385237 0.29911584 0.02921874]
+ [0.15849604 0.47530502 0.0134761 ]]
+test mean loss: 0.001094
+testing clustering accuracy: 0.801964
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 147 ****
+2021-04-27 02:23:26.734193
+learning rate: 0.000010
+train mean loss: 0.000951
+train clustering accuracy: 0.795325
+mu: [[0.17632286 0.2711737  0.03985479]
+ [0.17333835 0.2989597  0.02900129]
+ [0.15798552 0.47483695 0.01334081]]
+test mean loss: 0.001090
+testing clustering accuracy: 0.801658
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 148 ****
+2021-04-27 02:26:46.095060
+learning rate: 0.000010
+train mean loss: 0.000947
+train clustering accuracy: 0.795229
+mu: [[0.17580834 0.27099806 0.03962288]
+ [0.1728202  0.2987954  0.02877402]
+ [0.15748623 0.47436386 0.013188  ]]
+test mean loss: 0.001086
+testing clustering accuracy: 0.802283
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 149 ****
+2021-04-27 02:30:05.570518
+learning rate: 0.000010
+train mean loss: 0.000943
+train clustering accuracy: 0.795183
+mu: [[0.17530675 0.27083224 0.03937707]
+ [0.17231356 0.29863405 0.02854085]
+ [0.15698232 0.47389343 0.01303889]]
+test mean loss: 0.001081
+testing clustering accuracy: 0.801911
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 150 ****
+2021-04-27 02:33:24.966724
+learning rate: 0.000010
+train mean loss: 0.000939
+train clustering accuracy: 0.795074
+mu: [[0.17479768 0.2706702  0.03915861]
+ [0.17180176 0.2984783  0.02833129]
+ [0.1564881  0.4734281  0.01291402]]
+test mean loss: 0.001077
+testing clustering accuracy: 0.801645
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 151 ****
+2021-04-27 02:36:44.330660
+learning rate: 0.000010
+train mean loss: 0.000936
+train clustering accuracy: 0.795021
+mu: [[0.17429106 0.2705123  0.03891538]
+ [0.17129302 0.2983235  0.02810199]
+ [0.15598892 0.4729686  0.01277208]]
+test mean loss: 0.001071
+testing clustering accuracy: 0.800675
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 152 ****
+2021-04-27 02:40:03.754182
+learning rate: 0.000010
+train mean loss: 0.000932
+train clustering accuracy: 0.794813
+mu: [[0.17377836 0.27035218 0.03869214]
+ [0.17077984 0.29816896 0.02788787]
+ [0.15550041 0.4725076  0.01264241]]
+test mean loss: 0.001067
+testing clustering accuracy: 0.801446
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 153 ****
+2021-04-27 02:43:23.119021
+learning rate: 0.000010
+train mean loss: 0.000928
+train clustering accuracy: 0.794717
+mu: [[0.17326525 0.27019516 0.03848987]
+ [0.1702672  0.29801705 0.0276968 ]
+ [0.15501252 0.47205657 0.0125302 ]]
+test mean loss: 0.001063
+testing clustering accuracy: 0.801100
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 154 ****
+2021-04-27 02:46:42.556331
+learning rate: 0.000010
+train mean loss: 0.000924
+train clustering accuracy: 0.794605
+mu: [[0.17276444 0.27002984 0.03827167]
+ [0.16976492 0.29786038 0.02749162]
+ [0.15452951 0.47161254 0.01241168]]
+test mean loss: 0.001059
+testing clustering accuracy: 0.801127
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 155 ****
+2021-04-27 02:50:02.049326
+learning rate: 0.000010
+train mean loss: 0.000921
+train clustering accuracy: 0.794502
+mu: [[0.17227712 0.26987168 0.03805878]
+ [0.16927297 0.2977064  0.02728787]
+ [0.15404472 0.47116968 0.01229121]]
+test mean loss: 0.001055
+testing clustering accuracy: 0.801964
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 156 ****
+2021-04-27 02:53:21.348598
+learning rate: 0.000010
+train mean loss: 0.000917
+train clustering accuracy: 0.794403
+mu: [[0.17178912 0.26971346 0.03785081]
+ [0.16878363 0.29755118 0.02709312]
+ [0.15356539 0.47072548 0.01217411]]
+test mean loss: 0.001050
+testing clustering accuracy: 0.801074
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 157 ****
+2021-04-27 02:56:40.783064
+learning rate: 0.000010
+train mean loss: 0.000913
+train clustering accuracy: 0.794310
+mu: [[0.1713111  0.26955473 0.03765462]
+ [0.1683039  0.29739714 0.02690638]
+ [0.1530988  0.47028542 0.01206219]]
+test mean loss: 0.001046
+testing clustering accuracy: 0.801246
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 158 ****
+2021-04-27 03:00:00.170053
+learning rate: 0.000010
+train mean loss: 0.000910
+train clustering accuracy: 0.794185
+mu: [[0.17083316 0.2693991  0.0374521 ]
+ [0.1678239  0.2972438  0.02671626]
+ [0.1526239  0.469847   0.01195985]]
+test mean loss: 0.001041
+testing clustering accuracy: 0.799851
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 159 ****
+2021-04-27 03:03:19.510310
+learning rate: 0.000010
+train mean loss: 0.000907
+train clustering accuracy: 0.794006
+mu: [[0.1703528  0.26923978 0.03726491]
+ [0.1673413  0.29708877 0.02653852]
+ [0.1521502  0.4694079  0.01185761]]
+test mean loss: 0.001037
+testing clustering accuracy: 0.799585
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 160 ****
+2021-04-27 03:06:38.834185
+learning rate: 0.000010
+train mean loss: 0.000903
+train clustering accuracy: 0.793954
+mu: [[0.16987501 0.26908576 0.03707687]
+ [0.16686563 0.29693764 0.02636459]
+ [0.15168606 0.46898183 0.01175397]]
+test mean loss: 0.001034
+testing clustering accuracy: 0.799904
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 161 ****
+2021-04-27 03:09:58.247713
+learning rate: 0.000010
+train mean loss: 0.000900
+train clustering accuracy: 0.793798
+mu: [[0.16940154 0.26892784 0.03690081]
+ [0.16638935 0.2967853  0.0261981 ]
+ [0.15122148 0.46855465 0.01165565]]
+test mean loss: 0.001030
+testing clustering accuracy: 0.800197
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 162 ****
+2021-04-27 03:13:17.609567
+learning rate: 0.000010
+train mean loss: 0.000896
+train clustering accuracy: 0.793653
+mu: [[0.16893293 0.2687714  0.03672358]
+ [0.16591938 0.29663536 0.02603157]
+ [0.15075736 0.46813247 0.01155276]]
+test mean loss: 0.001027
+testing clustering accuracy: 0.799665
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 163 ****
+2021-04-27 03:16:37.022465
+learning rate: 0.000010
+train mean loss: 0.000893
+train clustering accuracy: 0.793527
+mu: [[0.16846687 0.26861262 0.03655898]
+ [0.1654505  0.29648396 0.02587406]
+ [0.15029764 0.467706   0.01145195]]
+test mean loss: 0.001023
+testing clustering accuracy: 0.799426
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 164 ****
+2021-04-27 03:19:56.378597
+learning rate: 0.000010
+train mean loss: 0.000890
+train clustering accuracy: 0.793438
+mu: [[0.16800043 0.26845235 0.03638243]
+ [0.16498442 0.29632774 0.02570944]
+ [0.14984736 0.46728024 0.0113469 ]]
+test mean loss: 0.001019
+testing clustering accuracy: 0.799639
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 165 ****
+2021-04-27 03:23:15.752650
+learning rate: 0.000010
+train mean loss: 0.000887
+train clustering accuracy: 0.793336
+mu: [[0.16753161 0.2683009  0.03622231]
+ [0.1645161  0.296178   0.02556219]
+ [0.14939596 0.46686187 0.01126155]]
+test mean loss: 0.001016
+testing clustering accuracy: 0.799585
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 166 ****
+2021-04-27 03:26:35.171789
+learning rate: 0.000010
+train mean loss: 0.000883
+train clustering accuracy: 0.793203
+mu: [[0.16706659 0.26814407 0.03604594]
+ [0.16405182 0.29602462 0.02539397]
+ [0.1489488  0.46644896 0.01115901]]
+test mean loss: 0.001012
+testing clustering accuracy: 0.799453
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 167 ****
+2021-04-27 03:29:54.520130
+learning rate: 0.000010
+train mean loss: 0.000880
+train clustering accuracy: 0.793121
+mu: [[0.16659571 0.26799646 0.03587497]
+ [0.16358238 0.29587758 0.02523955]
+ [0.14849523 0.46604648 0.01107077]]
+test mean loss: 0.001008
+testing clustering accuracy: 0.799134
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 168 ****
+2021-04-27 03:33:13.981825
+learning rate: 0.000010
+train mean loss: 0.000877
+train clustering accuracy: 0.793048
+mu: [[0.1661361  0.26784447 0.03571916]
+ [0.16312276 0.29573166 0.02509351]
+ [0.14804953 0.46564588 0.01099306]]
+test mean loss: 0.001005
+testing clustering accuracy: 0.799585
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 169 ****
+2021-04-27 03:36:33.426654
+learning rate: 0.000010
+train mean loss: 0.000874
+train clustering accuracy: 0.792909
+mu: [[0.16567846 0.26768705 0.03556685]
+ [0.16266347 0.2955816  0.02495263]
+ [0.14760254 0.4652447  0.01091455]]
+test mean loss: 0.001001
+testing clustering accuracy: 0.799652
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 170 ****
+2021-04-27 03:39:52.788261
+learning rate: 0.000010
+train mean loss: 0.000871
+train clustering accuracy: 0.792764
+mu: [[0.1652125  0.26754254 0.03540894]
+ [0.16220081 0.29543805 0.02480583]
+ [0.1471758  0.46485218 0.01083307]]
+test mean loss: 0.000997
+testing clustering accuracy: 0.799014
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 171 ****
+2021-04-27 03:43:12.136030
+learning rate: 0.000010
+train mean loss: 0.000868
+train clustering accuracy: 0.792681
+mu: [[0.16475315 0.26739737 0.03524788]
+ [0.16174154 0.2952948  0.02465566]
+ [0.1467419  0.46446338 0.01074699]]
+test mean loss: 0.000994
+testing clustering accuracy: 0.798390
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 172 ****
+2021-04-27 03:46:31.496017
+learning rate: 0.000010
+train mean loss: 0.000865
+train clustering accuracy: 0.792569
+mu: [[0.16428956 0.267254   0.03509034]
+ [0.16128065 0.29515642 0.02450867]
+ [0.1463059  0.4640792  0.01066413]]
+test mean loss: 0.000991
+testing clustering accuracy: 0.799253
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 173 ****
+2021-04-27 03:49:50.805559
+learning rate: 0.000010
+train mean loss: 0.000862
+train clustering accuracy: 0.792490
+mu: [[0.16382581 0.26710564 0.03493382]
+ [0.16081668 0.29501328 0.02436534]
+ [0.14587098 0.46368673 0.0105866 ]]
+test mean loss: 0.000988
+testing clustering accuracy: 0.798855
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 174 ****
+2021-04-27 03:53:10.101078
+learning rate: 0.000010
+train mean loss: 0.000859
+train clustering accuracy: 0.792384
+mu: [[0.16337216 0.26696038 0.03477421]
+ [0.16036457 0.2948707  0.02421847]
+ [0.14544277 0.4633041  0.01050518]]
+test mean loss: 0.000984
+testing clustering accuracy: 0.799293
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 175 ****
+2021-04-27 03:56:29.337457
+learning rate: 0.000010
+train mean loss: 0.000856
+train clustering accuracy: 0.792192
+mu: [[0.1629097  0.26680756 0.03462175]
+ [0.1599041  0.2947233  0.02407802]
+ [0.14500874 0.46291667 0.01042714]]
+test mean loss: 0.000981
+testing clustering accuracy: 0.799240
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 176 ****
+2021-04-27 03:59:48.780192
+learning rate: 0.000010
+train mean loss: 0.000853
+train clustering accuracy: 0.792050
+mu: [[0.16245082 0.26666176 0.03446985]
+ [0.15944861 0.2945785  0.02393902]
+ [0.14457786 0.4625299  0.01034782]]
+test mean loss: 0.000978
+testing clustering accuracy: 0.798988
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 177 ****
+2021-04-27 04:03:08.156016
+learning rate: 0.000010
+train mean loss: 0.000850
+train clustering accuracy: 0.791875
+mu: [[0.16200474 0.26651117 0.03431856]
+ [0.1590023  0.2944317  0.02380009]
+ [0.14414954 0.46214738 0.01027526]]
+test mean loss: 0.000975
+testing clustering accuracy: 0.798097
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 178 ****
+2021-04-27 04:06:27.693710
+learning rate: 0.000010
+train mean loss: 0.000847
+train clustering accuracy: 0.791749
+mu: [[0.16155802 0.26636294 0.03417097]
+ [0.15855789 0.29428646 0.02366228]
+ [0.14372729 0.46176523 0.01019851]]
+test mean loss: 0.000971
+testing clustering accuracy: 0.798350
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 179 ****
+2021-04-27 04:09:47.086122
+learning rate: 0.000010
+train mean loss: 0.000845
+train clustering accuracy: 0.791587
+mu: [[0.16110262 0.26621473 0.03401295]
+ [0.15810615 0.29414144 0.02351551]
+ [0.14329919 0.4613917  0.01011322]]
+test mean loss: 0.000968
+testing clustering accuracy: 0.798151
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 180 ****
+2021-04-27 04:13:06.391760
+learning rate: 0.000010
+train mean loss: 0.000842
+train clustering accuracy: 0.791468
+mu: [[0.16064827 0.2660688  0.03383879]
+ [0.1576563  0.29399708 0.02335188]
+ [0.14287442 0.46102217 0.01000643]]
+test mean loss: 0.000964
+testing clustering accuracy: 0.797818
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 181 ****
+2021-04-27 04:16:25.759579
+learning rate: 0.000010
+train mean loss: 0.000839
+train clustering accuracy: 0.791267
+mu: [[0.16019516 0.26592752 0.0336947 ]
+ [0.15720592 0.29386058 0.02322152]
+ [0.14245176 0.46066096 0.00993529]]
+test mean loss: 0.000962
+testing clustering accuracy: 0.798297
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 182 ****
+2021-04-27 04:19:45.184127
+learning rate: 0.000010
+train mean loss: 0.000836
+train clustering accuracy: 0.791108
+mu: [[0.15974276 0.26578656 0.03355311]
+ [0.15675676 0.29372343 0.02308989]
+ [0.14203095 0.4603047  0.00985736]]
+test mean loss: 0.000959
+testing clustering accuracy: 0.798456
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 183 ****
+2021-04-27 04:23:04.597814
+learning rate: 0.000010
+train mean loss: 0.000834
+train clustering accuracy: 0.790963
+mu: [[0.15929762 0.26565015 0.03340319]
+ [0.15631239 0.2935918  0.02295056]
+ [0.14161462 0.45994762 0.00977505]]
+test mean loss: 0.000956
+testing clustering accuracy: 0.798855
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 184 ****
+2021-04-27 04:26:24.048490
+learning rate: 0.000010
+train mean loss: 0.000831
+train clustering accuracy: 0.790870
+mu: [[0.15885973 0.26551804 0.03325811]
+ [0.155876   0.29346257 0.02281964]
+ [0.14120613 0.45959824 0.00970065]]
+test mean loss: 0.000953
+testing clustering accuracy: 0.798682
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 185 ****
+2021-04-27 04:29:43.355035
+learning rate: 0.000010
+train mean loss: 0.000828
+train clustering accuracy: 0.790665
+mu: [[0.15842932 0.26538128 0.03311066]
+ [0.15544643 0.29333365 0.02268638]
+ [0.14079915 0.45924455 0.00962745]]
+test mean loss: 0.000950
+testing clustering accuracy: 0.797513
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 186 ****
+2021-04-27 04:33:02.681380
+learning rate: 0.000010
+train mean loss: 0.000826
+train clustering accuracy: 0.790599
+mu: [[0.15799038 0.2652437  0.03296404]
+ [0.15501006 0.2932027  0.02255182]
+ [0.1403897  0.45888877 0.00955553]]
+test mean loss: 0.000947
+testing clustering accuracy: 0.797898
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 187 ****
+2021-04-27 04:36:22.109307
+learning rate: 0.000010
+train mean loss: 0.000823
+train clustering accuracy: 0.790447
+mu: [[0.15755908 0.26511052 0.03282547]
+ [0.15458177 0.29307255 0.02242521]
+ [0.13998623 0.458538   0.00947993]]
+test mean loss: 0.000944
+testing clustering accuracy: 0.797646
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 188 ****
+2021-04-27 04:39:41.420934
+learning rate: 0.000010
+train mean loss: 0.000820
+train clustering accuracy: 0.790308
+mu: [[0.15712789 0.26497617 0.03268277]
+ [0.15415204 0.29294252 0.02229796]
+ [0.13957992 0.45819104 0.00941962]]
+test mean loss: 0.000941
+testing clustering accuracy: 0.797832
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 189 ****
+2021-04-27 04:43:00.891753
+learning rate: 0.000010
+train mean loss: 0.000818
+train clustering accuracy: 0.790077
+mu: [[0.15670462 0.26483774 0.03255302]
+ [0.15372863 0.2928142  0.02218195]
+ [0.13917805 0.45783964 0.00936512]]
+test mean loss: 0.000939
+testing clustering accuracy: 0.797074
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 190 ****
+2021-04-27 04:46:20.195498
+learning rate: 0.000010
+train mean loss: 0.000815
+train clustering accuracy: 0.789899
+mu: [[0.15628038 0.26470706 0.03242436]
+ [0.15330356 0.29268774 0.02206209]
+ [0.13877118 0.45749387 0.00929852]]
+test mean loss: 0.000936
+testing clustering accuracy: 0.798177
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 191 ****
+2021-04-27 04:49:39.575719
+learning rate: 0.000010
+train mean loss: 0.000813
+train clustering accuracy: 0.789707
+mu: [[0.15585306 0.2645758  0.03229901]
+ [0.15287854 0.29256275 0.0219487 ]
+ [0.13837096 0.45714974 0.00924323]]
+test mean loss: 0.000933
+testing clustering accuracy: 0.796955
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 192 ****
+2021-04-27 04:52:59.000486
+learning rate: 0.000010
+train mean loss: 0.000810
+train clustering accuracy: 0.789571
+mu: [[0.1554349  0.26444167 0.03217871]
+ [0.1524587  0.29243788 0.02184081]
+ [0.13797073 0.4568125  0.00918909]]
+test mean loss: 0.000930
+testing clustering accuracy: 0.796795
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 193 ****
+2021-04-27 04:56:18.389663
+learning rate: 0.000010
+train mean loss: 0.000808
+train clustering accuracy: 0.789333
+mu: [[0.15502135 0.26430845 0.03204561]
+ [0.15204602 0.29230943 0.02171792]
+ [0.1375716  0.45647663 0.00912113]]
+test mean loss: 0.000927
+testing clustering accuracy: 0.796490
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 194 ****
+2021-04-27 04:59:37.882172
+learning rate: 0.000010
+train mean loss: 0.000806
+train clustering accuracy: 0.789109
+mu: [[0.15461245 0.26416817 0.03192944]
+ [0.15163587 0.29218182 0.0216137 ]
+ [0.1371795  0.45613983 0.00907223]]
+test mean loss: 0.000926
+testing clustering accuracy: 0.796702
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 195 ****
+2021-04-27 05:02:57.268579
+learning rate: 0.000010
+train mean loss: 0.000803
+train clustering accuracy: 0.788907
+mu: [[0.15420018 0.26403308 0.0318079 ]
+ [0.151222   0.29205534 0.0215036 ]
+ [0.13678539 0.45580313 0.00901577]]
+test mean loss: 0.000922
+testing clustering accuracy: 0.796530
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 196 ****
+2021-04-27 05:06:16.571443
+learning rate: 0.000010
+train mean loss: 0.000801
+train clustering accuracy: 0.788762
+mu: [[0.1537921  0.2639062  0.03167852]
+ [0.15081464 0.29192922 0.02138361]
+ [0.13639353 0.4554711  0.00894681]]
+test mean loss: 0.000920
+testing clustering accuracy: 0.796569
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 197 ****
+2021-04-27 05:09:35.856158
+learning rate: 0.000010
+train mean loss: 0.000799
+train clustering accuracy: 0.788554
+mu: [[0.15339036 0.26377618 0.03155576]
+ [0.15041138 0.2918086  0.02127518]
+ [0.13600251 0.45514843 0.00889636]]
+test mean loss: 0.000917
+testing clustering accuracy: 0.796556
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 198 ****
+2021-04-27 05:12:55.112281
+learning rate: 0.000010
+train mean loss: 0.000796
+train clustering accuracy: 0.788332
+mu: [[0.15299812 0.26364645 0.03144245]
+ [0.1500142  0.29168946 0.02117279]
+ [0.13561577 0.45482695 0.00885212]]
+test mean loss: 0.000915
+testing clustering accuracy: 0.796304
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
+**** EPOCH 199 ****
+2021-04-27 05:16:14.448652
+learning rate: 0.000010
+train mean loss: 0.000794
+train clustering accuracy: 0.788048
+mu: [[0.15261213 0.26351246 0.03133139]
+ [0.14962319 0.29156673 0.02107377]
+ [0.13523187 0.45449847 0.00880856]]
+test mean loss: 0.000912
+testing clustering accuracy: 0.795786
+Model saved in file: ../logs/wztop_100p_test/cluster.ckpt
